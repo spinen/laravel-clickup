@@ -16,7 +16,7 @@ class AddClickUpTokenToUsersTable extends Migration
         Schema::table(
             'users',
             function (Blueprint $table) {
-                $table->string('clickup_token')
+                $table->string('clickup_token', 1024)
                       ->after('password')
                       ->nullable();
             }
