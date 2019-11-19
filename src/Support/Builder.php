@@ -163,7 +163,7 @@ class Builder
                          ->request($this->getPath());
 
         // Peel off the key if exist
-        $response = $this->peelWrapperPropertyIfNeeded($response);
+        $response = $this->peelWrapperPropertyIfNeeded(Arr::wrap($response));
 
         // Convert to a collection of filtered objects casted to the class
         return (new Collection((array_values($response) === $response) ? $response : [$response]))->map(

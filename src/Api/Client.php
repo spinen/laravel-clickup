@@ -53,11 +53,11 @@ class Client
      *
      * @param string $path
      *
-     * @return array
+     * @return array|null
      * @throws GuzzleException
      * @throws TokenException
      */
-    public function delete($path): array
+    public function delete($path): ?array
     {
         return $this->request($path, [], 'DELETE');
     }
@@ -67,11 +67,11 @@ class Client
      *
      * @param string $path
      *
-     * @return array
+     * @return array|null
      * @throws GuzzleException
      * @throws TokenException
      */
-    public function get($path): array
+    public function get($path): ?array
     {
         return $this->request($path, null, 'GET');
     }
@@ -143,11 +143,11 @@ class Client
      * @param string $path
      * @param array $data
      *
-     * @return array
+     * @return array|null
      * @throws GuzzleException
      * @throws TokenException
      */
-    public function post($path, array $data): array
+    public function post($path, array $data): ?array
     {
         return $this->request($path, $data, 'POST');
     }
@@ -158,11 +158,11 @@ class Client
      * @param string $path
      * @param array $data
      *
-     * @return array
+     * @return array|null
      * @throws GuzzleException
      * @throws TokenException
      */
-    public function put($path, array $data): array
+    public function put($path, array $data): ?array
     {
         return $this->request($path, $data, 'PUT');
     }
@@ -174,7 +174,7 @@ class Client
      * @param array|null $data
      * @param string|null $method
      *
-     * @return array
+     * @return array|null
      * @throws GuzzleException
      * @throws TokenException
      */
