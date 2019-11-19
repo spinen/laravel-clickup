@@ -1,0 +1,63 @@
+{
+    "name": "spinen/laravel-clickup",
+    "description": "SPINEN's Laravel Package for ClickUp.",
+    "keywords": [
+        "clickup",
+        "client",
+        "laravel",
+        "spinen"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jimmy Puckett",
+            "email": "jimmy.puckett@spinen.com"
+        },
+        {
+            "name": "Stephen Finney",
+            "email": "stephen.finney@spinen.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "ext-json": "*",
+        "firebase/php-jwt": "^5.0",
+        "guzzlehttp/guzzle": "^6.3",
+        "illuminate/container": "~5.5|~6",
+        "illuminate/database": "~5.5|~6",
+        "illuminate/http": "~5.5|~6",
+        "illuminate/routing": "~5.5|~6",
+        "nesbot/carbon": "~1.2|~2",
+        "vlucas/phpdotenv": "^3.6"
+    },
+    "require-dev": {
+        "illuminate/auth": "~5.5|~6",
+        "mockery/mockery": "^1",
+        "phpunit/phpunit": "~7.0.1|~8.0",
+        "psy/psysh": "^0.9.9",
+        "symfony/thanks": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spinen\\ClickUp\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Spinen\\ClickUp\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Spinen\\ClickUp\\Providers\\ClientServiceProvider",
+                "Spinen\\ClickUp\\Providers\\ServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
