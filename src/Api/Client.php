@@ -77,6 +77,67 @@ class Client
     }
 
     /**
+     * Convert OAuth code to token for user
+     *
+     * @param string $code
+     *
+     * @return string
+     * @throws GuzzleException
+     */
+    public function oauthRequestTokenUsingCode($code): string
+    {
+        $path = 'oauth/token?' . http_build_query(
+            [
+                'client_id'     => $this->configs['oauth']['id'],
+                'client_secret' => $this->configs['oauth']['secret'],
+                'code'          => $code,
+            ]
+        );
+
+        try {
+            return json_decode(
+                $this->guzzle->request(
+                    'POST',
+                    $this->uri($path),
+                    [
+                        'headers' => [
+                            'Content-Type'  => 'application/json',
+                        ],
+                    ]
+                )
+                             ->getBody()
+                             ->getContents(),
+                true
+            )['access_token'];
+        } catch (GuzzleException $e) {
+            // TODO: Figure out what to do with this error
+            // TODO: Consider returning [] for 401's?
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Build the uri to redirect the user to start the OAuth process
+     *
+     * @param string $url
+     *
+     * @return string
+     */
+    public function oauthUri($url): string
+    {
+        return $this->uri(
+            '?' . http_build_query(
+                [
+                    'client_id'    => $this->configs['oauth']['id'],
+                    'redirect_uri' => $url,
+                ]
+            ),
+            $this->configs['oauth']['url']
+        );
+    }
+
+    /**
      * Shortcut to 'POST' request
      *
      * @param string $path
@@ -179,14 +240,16 @@ class Client
     /**
      * URL to ClickUp
      *
-     * If path is passed in, then append it to the end
+     * If path is passed in, then append it to the end.  By default, it will use the url
+     * in the configs, but if an url is passed in as second parameter, then it is used.
      *
      * @param string|null $path
+     * @param string|null $url
      *
      * @return string
      */
-    public function uri($path = null): string
+    public function uri($path = null, $url = null): string
     {
-        return rtrim($this->configs['url'], '/') . '/' . ltrim($path, '/');
+        return rtrim(($url ?: $this->configs['url']), '/') . ($path [0] === '?' ? null : '/') . ltrim($path, '/');
     }
 }

@@ -23,6 +23,9 @@ We solely use [Laravel](https://www.laravel.com) for our applications, so this p
         * [Optional Keys](#optional-keys)
  * [Generic PHP Setup](#generic-php-setup)
     * [Examples](#examples)
+ * [Authentication](#authentication)
+    * [OAuth](#oauth)
+    * [Personal Token](#personal-token)
  * [Usage](#usage)
     * [Supported Actions](#supported-actions)
     * [Using the Client](#using-the-client)
@@ -71,6 +74,9 @@ The package uses the [auto registration feature](https://laravel.com/docs/master
 
     #### Optional Keys
     ```bash
+    CLICKUP_CLIENT_ID=<Application ID, if using OAuth to generate user tokens>
+    CLICKUP_CLIENT_SECRET=<Application Secret, if using OAuth to generate user tokens>
+    CLICKUP_OAUTH_URL=<url to clickup OAuth flow, default is v2>
     CLICKUP_URL=<url to clickup API, default is v2>
     ```
 
@@ -96,7 +102,85 @@ The package uses the [auto registration feature](https://laravel.com/docs/master
 
 ### Examples
 
-// TODO: Add regular PHP examples
+To get a `Spinen\ClickUp\Api\Client` instance...
+
+```bash
+$ psysh
+Psy Shell v0.9.9 (PHP 7.3.11 — cli) by Justin Hileman
+>>> $configs = [
+     "oauth" => [
+       "id" => "<client_id>", // if using OAuth
+       "secret" => "<client_secret>", // If using OAuth
+       "url" => "https://app.clickup.com/api",
+     ],
+     "route" => [
+       "enabled" => true,
+       "middleware" => [
+         "web",
+       ],
+       "sso" => "clickup/sso",
+     ],
+     "url" => "https://api.clickup.com/api/v2",
+   ];
+>>> $guzzle = new GuzzleHttp\Client();
+=> GuzzleHttp\Client {#2379}
+>>> $clickup = new Spinen\ClickUp\Api\Client($configs, $guzzle) // Optionally, pass the token as 3rd parameter
+=> Spinen\ClickUp\Api\Client {#2363}
+>>> $clickup->setToken('<a token>') // Skip if passed in via constructor
+=> Spinen\ClickUp\Api\Client {#2363}
+```
+
+The `$clickup` instance will work exaclty like all of the examples below, so if you are not using Laravel, then you can use the package once you bootstrap the client.
+
+
+## Autenication
+
+ClickUp has 2 ways to authenicate when making API calls... 1) OAuth token or 2) Personal Token.  Either method uses a token that is saved to the `clickup_token` property on the `User` model.
+
+### OAuth
+
+There is a middleware named `clickup` that you can apply to any route that verifies that the user has a `clickup_token`, and if the user does not, then it redirects the user to ClickUp's OAuth page with the `client_id` where the user selectes the team(s) to link with your applciation.  Upon selecting the team(s), the user is rediected to `/clickup/sso/<user_id>?code=<OAuth Code>` where the system converts the `code` to a token & saves it to the user.  Upon saving the `clickup_token`, the user is redirected to the inital page that was proteted by the middleware.
+
+> NOTE: You will need to have the `auth` middleware on the routes as the `User` is needed to see if there is a `clickup_token`.
+
+If you do not want to use the `clickup` middleware to start the OAuth flow, then you can use the `oauthUri` on the `Client` to generate the link for the user...
+
+```bash
+$ php artisan tinker
+Psy Shell v0.9.9 (PHP 7.3.11 — cli) by Justin Hileman
+>>> $clickup = app(Spinen\ClickUp\Api\Client::class)
+=> Spinen\ClickUp\Api\Client {#3035}
+>>> $clickup->oauthUri(route('clickup.sso.redirect_url', <user_id>))
+=> "https://app.clickup.com/api?client_id=<client_id>&redirect_uri=https%3A%2F%2F<your.host>2Fclickup%2Fsso%2F<user_id>"
+>>>
+```
+
+> NOTE: At this time, there is not a way to remove a token that has been invalidated, so you will need to delete the `clickup_token` on the user to restart the flow.
+
+### Personal Token
+
+If you do not what to use the OAuth flow, then you can allow the user to provide you a personal token that you can save on the `User`.
+
+```bash
+$ php artisan tinker
+Psy Shell v0.9.9 (PHP 7.3.11 — cli) by Justin Hileman
+>>> $user = App\User::find(1)
+=> App\User {#3040
+     id: 1,
+     first_name: "Bob",
+     last_name: "Tester",
+     email: "bob.tester@example.com",
+     email_verified_at: null,
+     created_at: "2019-11-15 19:49:01",
+     updated_at: "2019-11-15 19:49:01",
+     logged_in_at: "2019-11-15 19:49:01",
+     deleted_at: null,
+   }
+>>> $user->clickup_token = '<personal token>';
+=> "<personal token>"
+>>> $user->save()
+=> true
+```
 
 ## Usage
 
@@ -116,6 +200,10 @@ Once you new up a `Client` instance, you have the following methods...
 
 * `get($path)` - Shortcut to the `request()` method with 'GET' as the last parameter
 
+* `oauthRequestTokenUsingCode($code)` - Request a token from the OAuth code
+
+* `oauthUri($url)` - Build the URI to the OAuth page with the redirect_url set to `$url`
+
 * `post($path, array $data)` - Shortcut to the `request()` method with 'POST' as the last parameter
 
 * `put($path, array $data)` - Shortcut to the `request()` method with 'PUT' as the last parameter
@@ -126,7 +214,7 @@ Once you new up a `Client` instance, you have the following methods...
 
 * `setToken($token)` - Set the token for the ClickUp API
 
-* `uri($path = null)` - Generate a full uri for the path to the ClickUp API.
+* `uri($path = null, $url = null)` - Generate a full uri for the path to the ClickUp API.
 
 ### Using the Client
 
@@ -135,6 +223,7 @@ The Client is meant to emulate [Laravel's models with Eloquent](https://laravel.
 #### Getting the Client object
 
 By running the migration included in this package, your `User` class will have a `clickup_token` column on it. When you set the user's token, it is encrypted in your database with [Laravel's encryption methods](https://laravel.com/docs/master/encryption#using-the-encrypter). After setting the ClickUp API token, you can access the Client object through `$user->clickup`.
+
 ```php
 $ php artisan tinker
 Psy Shell v0.9.9 (PHP 7.2.19 — cli) by Justin Hileman
@@ -150,10 +239,7 @@ Psy Shell v0.9.9 (PHP 7.2.19 — cli) by Justin Hileman
      logged_in_at: "2019-11-15 19:49:01",
      deleted_at: null,
    }
->>> $user->clickup_token = 'your_token_here';
-=> "your_token_here"
->>> $user->save();
-=> true
+>>> // NOTE: Must have a clickup_token via one of the 2 ways in the Authentication section
 >>> $user->clickup;
 => Spinen\ClickUp\Api\Client {#3635}
 ```
@@ -237,7 +323,7 @@ You may also call these relationships as attributes, and the Client will return 
 #### Advanced filtering using "where"
 
 You can do advanced filters by using `where` on the models
-// TODO: Address advanced calls, like the API's Get Filtered Team Tasks. /team/team_id/task?...
+
 ```php
 >>> $team->tasks()->where('space_ids', ['space_id_1', 'space_id_2'])->where('assignees', ['assignee1', 'assignee2'])->get()->count();
 => 100
@@ -245,6 +331,7 @@ You can do advanced filters by using `where` on the models
 >>> $team->tasks()->where....->where('page', 2)->get();
 ```
 
+> NOTE: The API has a page size of `100` records, so to get to the next page you use the `where` method... ```->where('page', 3)```
 
 ### More Examples
 

@@ -5,6 +5,7 @@ namespace Spinen\ClickUp\Providers;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
+use Spinen\ClickUp\Http\Middleware\Filter;
 
 /**
  * Class ServiceProvider
@@ -20,9 +21,11 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function boot()
     {
+        $this->registerMiddleware();
+
         $this->registerPublishes();
 
-        // $this->registerRoutes();
+        $this->registerRoutes();
     }
 
     /**
@@ -33,6 +36,17 @@ class ServiceProvider extends LaravelServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../../config/clickup.php', 'clickup');
+    }
+
+    /**
+     * Register the middleware
+     *
+     * If a route needs to have the QuickBooks client, then make sure that the user has linked their account.
+     *
+     */
+    public function registerMiddleware()
+    {
+        $this->app->router->aliasMiddleware('clickup', Filter::class);
     }
 
     /**
@@ -57,6 +71,24 @@ class ServiceProvider extends LaravelServiceProvider
                     __DIR__ . '/../../database/migrations' => database_path('migrations'),
                 ],
                 'clickup-migrations'
+            );
+        }
+    }
+
+    /**
+     * Register the routes needed for the OAuth flow
+     */
+    protected function registerRoutes()
+    {
+        if (Config::get('clickup.route.enabled')) {
+            Route::group(
+                [
+                    'namespace'  => 'Spinen\ClickUp\Http\Controllers',
+                    'middleware' => Config::get('clickup.route.middleware', ['web']),
+                ],
+                function () {
+                    $this->loadRoutesFrom(realpath(__DIR__ . '/../../routes/web.php'));
+                }
             );
         }
     }

@@ -2,11 +2,36 @@
 
 return [
 
-    'client' => [
-// TODO: Add these back when supporting OAUTH connections
-//        'id' => env('CLICKUP_CLIENT_ID'),
-//
-//        'secret' => env('CLICKUP_CLIENT_SECRET'),
+    /*
+    |--------------------------------------------------------------------------
+    | ClickUp OAuth
+    |--------------------------------------------------------------------------
+    |
+    | ID & secret to make OAuth request
+    |
+    */
+    'oauth' => [
+        'id' => env('CLICKUP_CLIENT_ID'),
+
+        'secret' => env('CLICKUP_CLIENT_SECRET'),
+
+        'url' => env('CLICKUP_OAUTH_URL', 'https://app.clickup.com/api'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Route
+    |--------------------------------------------------------------------------
+    |
+    | Setting for the routing
+    |
+    */
+    'route' => [
+        'enabled' => true,
+
+        'middleware' => ['web'],
+
+        'sso' => 'clickup/sso',
     ],
 
     /*
@@ -17,6 +42,6 @@ return [
     | The URL to the ClickUp server
     |
     */
-    'url'    => env('CLICKUP_URL', 'https://api.clickup.com/api/v2'),
+    'url' => env('CLICKUP_URL', 'https://api.clickup.com/api/v2'),
 
 ];

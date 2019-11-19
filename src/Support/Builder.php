@@ -14,6 +14,7 @@ use Spinen\ClickUp\Exceptions\TokenException;
 use Spinen\ClickUp\Space;
 use Spinen\ClickUp\Task;
 use Spinen\ClickUp\Team;
+use Spinen\ClickUp\User;
 
 /**
  * Class Builder
@@ -24,6 +25,7 @@ use Spinen\ClickUp\Team;
  * @property Collection $tasks
  * @property Collection $teams
  * @property Collection $workspaces
+ * @property User $user
  *
  * @method spaces
  * @method tasks
@@ -80,7 +82,7 @@ class Builder
      * @param string $name
      * @param $arguments
      *
-     * @return $this|null
+     * @return mixed
      * @throws BadMethodCallException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -99,10 +101,21 @@ class Builder
      *
      * @param string $name
      *
-     * @return Model|null
+     * @return Collection|Model|null
+     * @throws GuzzleException
+     * @throws InvalidRelationshipException
+     * @throws ModelNotFoundException
+     * @throws NoClientException
+     * @throws TokenException
      */
     public function __get($name)
     {
+        if ($name === 'user') {
+            return $this->newInstanceForModel(User::class)
+                        ->get()
+                        ->first();
+        }
+
         // Only return builders as properties, when not a child
         if (!$this->parentModel && array_key_exists($name, $this->rootModels)) {
             return $this->{$name}()

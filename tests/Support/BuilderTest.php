@@ -12,6 +12,7 @@ use Spinen\ClickUp\Space;
 use Spinen\ClickUp\Task;
 use Spinen\ClickUp\Team;
 use Spinen\ClickUp\TestCase;
+use Spinen\ClickUp\User;
 use Spinen\ClickUp\View;
 
 /**
@@ -81,19 +82,32 @@ class BuilderTest extends TestCase
     public function rootModels()
     {
         return [
-            'spaces' => [
+            'spaces'     => [
                 'model' => 'spaces',
             ],
-            'tasks' => [
+            'tasks'      => [
                 'model' => 'tasks',
             ],
-            'teams' => [
+            'teams'      => [
                 'model' => 'teams',
             ],
             'workspaces' => [
                 'model' => 'workspaces',
             ],
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_a_user_for_current_token()
+    {
+        $this->client_mock->shouldReceive('request')
+                          ->once()
+                          ->withAnyArgs()
+                          ->andReturn([['name' => 'User']]);
+
+        $this->assertInstanceOf(User::class, $this->builder->user);
     }
 
     /**
