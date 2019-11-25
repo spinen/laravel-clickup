@@ -7,15 +7,15 @@ return [
     | ClickUp OAuth
     |--------------------------------------------------------------------------
     |
-    | ID & secret to make OAuth request
+    | ID & secret to make OAuth requests
     |
     */
     'oauth' => [
-        'id' => env('CLICKUP_CLIENT_ID'),
+        'id'     => env('CLICKUP_CLIENT_ID'),
 
         'secret' => env('CLICKUP_CLIENT_SECRET'),
 
-        'url' => env('CLICKUP_OAUTH_URL', 'https://app.clickup.com/api'),
+        'url'    => env('CLICKUP_OAUTH_URL', 'https://app.clickup.com/api'),
     ],
 
     /*
@@ -27,11 +27,11 @@ return [
     |
     */
     'route' => [
-        'enabled' => true,
+        'enabled'    => true,
 
         'middleware' => ['web'],
 
-        'sso' => 'clickup/sso',
+        'sso'        => 'clickup/sso',
     ],
 
     /*
@@ -43,5 +43,4 @@ return [
     |
     */
     'url' => env('CLICKUP_URL', 'https://api.clickup.com/api/v2'),
-
 ];

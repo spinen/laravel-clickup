@@ -5,7 +5,7 @@
 [![Total Downloads](https://poser.pugx.org/spinen/laravel-clickup/downloads)](https://packagist.org/packages/spinen/laravel-clickup)
 [![License](https://poser.pugx.org/spinen/laravel-clickup/license)](https://packagist.org/packages/spinen/laravel-clickup)
 
-PHP package to interface with [ClickUp](https://clickup.com).
+PHP package to interface with [ClickUp](https://clickup.com). We strongly encourage you to review [ClickUp's API docs](https://clickup.com/api) to get a feel for what this package can do, as we are just wrapping their API.
 
 We solely use [Laravel](https://www.laravel.com) for our applications, so this package is written with Laravel in mind. We have tried to make it work outside of Laravel. If there is a request from the community to split this package into 2 parts, then we will consider doing that work.
 
