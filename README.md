@@ -133,9 +133,9 @@ Psy Shell v0.9.9 (PHP 7.3.11 — cli) by Justin Hileman
 The `$clickup` instance will work exaclty like all of the examples below, so if you are not using Laravel, then you can use the package once you bootstrap the client.
 
 
-## Autenication
+## Authentication
 
-ClickUp has 2 ways to authenicate when making API calls... 1) OAuth token or 2) Personal Token.  Either method uses a token that is saved to the `clickup_token` property on the `User` model.
+ClickUp has 2 ways to authenticate when making API calls... 1) OAuth token or 2) Personal Token.  Either method uses a token that is saved to the `clickup_token` property on the `User` model.
 
 ### OAuth
 
