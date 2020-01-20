@@ -30,7 +30,7 @@ class Field extends Model
      * @var array
      */
     protected $casts = [
-        'date_created'    => 'datetime:U',
+        'date_created'    => 'datetime:Uv',
         'hide_from_guest' => 'boolean',
         'id'              => 'string',
     ];

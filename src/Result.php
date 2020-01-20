@@ -41,7 +41,7 @@ class Result extends Model
     protected $casts = [
         'completed'         => 'boolean',
         'creator'           => 'integer',
-        'date_created'      => 'datetime:U',
+        'date_created'      => 'datetime:Uv',
         'goal_pretty_id'    => 'integer',
         'id'                => 'string',
         'percent_completed' => 'float',

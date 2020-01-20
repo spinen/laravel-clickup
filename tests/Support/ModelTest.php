@@ -2,11 +2,15 @@
 
 namespace Spinen\ClickUp\Support;
 
+use DateTime;
 use GuzzleHttp\Exception\InvalidArgumentException;
 use Illuminate\Database\Eloquent\JsonEncodingException;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 use LogicException;
 use Mockery;
 use Mockery\Mock;
+use ReflectionObject;
 use Spinen\ClickUp\Api\Client;
 use Spinen\ClickUp\Exceptions\ModelReadonlyException;
 use Spinen\ClickUp\Exceptions\UnableToSaveException;
@@ -768,5 +772,81 @@ class ModelTestTest extends TestCase
         $this->expectException(UnableToSaveException::class);
 
         $this->model->saveOrFail();
+    }
+
+    public function castToDatetimeValuesProvider()
+    {
+        $carbon = Carbon::now();
+        $datetime = new DateTime();
+        return [
+            'carbon' => [
+                'value' => $carbon,
+                'timestampsInMilliseconds' => true,
+                'expected' => Date::instance($carbon),
+            ],
+            'datetime' => [
+                'value' => $datetime,
+                'timestampsInMilliseconds' => true,
+                'expected' => Date::parse(
+                    $datetime->format('Y-m-d H:i:s.u'), $datetime->getTimezone()
+                ),
+            ],
+            'carbon2' => [
+                'value' => $carbon,
+                'timestampsInMilliseconds' => false,
+                'expected' => Date::instance($carbon),
+            ],
+            'datetime2' => [
+                'value' => $datetime,
+                'timestampsInMilliseconds' => false,
+                'expected' => Date::parse(
+                    $datetime->format('Y-m-d H:i:s.u'), $datetime->getTimezone()
+                ),
+            ],
+            'timestamp' => [
+                'value' => 1579542588,
+                'timestampsInMilliseconds' => false,
+                'expected' => Date::createFromTimestamp(1579542588),
+            ],
+            'timestamp_ms' => [
+                'value' => 1579542588123,
+                'timestampsInMilliseconds' => true,
+                'expected' => Date::createFromTimestampMs(1579542588123),
+            ],
+            'standard' => [
+                'value' => '2020-02-01',
+                'timestampsInMilliseconds' => true,
+                'expected' =>  Date::instance(Carbon::createFromFormat('Y-m-d', '2020-02-01')->startOfDay()),
+            ],
+            'standard' => [
+                'value' => '2020-02-01',
+                'timestampsInMilliseconds' => false,
+                'expected' =>  Date::instance(Carbon::createFromFormat('Y-m-d', '2020-02-01')->startOfDay()),
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider castToDatetimeValuesProvider
+     */
+    public function it_casts_to_datetime_from_various_values($value, $timestampInMilliseconds, $expected)
+    {
+        $model = new Model();
+        $model->setRawAttributes([
+            'datetime_value' => $value
+        ]);
+
+        $reflection = new ReflectionObject($model);
+
+        $timProperty = $reflection->getProperty('timestampsInMilliseconds');
+        $timProperty->setAccessible(true);
+        $timProperty->setValue($model, $timestampInMilliseconds);
+
+        $castsProperty = $reflection->getProperty('casts');
+        $castsProperty->setAccessible(true);
+        $castsProperty->setValue($model, ['datetime_value' => 'datetime']);
+
+        $this->assertEquals($expected, $model->getAttribute('datetime_value'));
     }
 }

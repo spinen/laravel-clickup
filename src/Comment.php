@@ -33,7 +33,7 @@ class Comment extends Model
      * @var array
      */
     protected $casts = [
-        'date'     => 'datetime:U',
+        'date'     => 'datetime:Uv',
         'id'       => 'integer',
         'resolved' => 'boolean',
     ];

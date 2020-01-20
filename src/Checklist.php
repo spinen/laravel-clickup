@@ -33,7 +33,7 @@ class Checklist extends Model
      * @var array
      */
     protected $casts = [
-        'date_created' => 'datetime:U',
+        'date_created' => 'datetime:Uv',
         'id'           => 'string',
         'orderindex'   => 'float',
         'resolved'     => 'boolean',

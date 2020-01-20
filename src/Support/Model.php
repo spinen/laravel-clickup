@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Concerns\HidesAttributes;
 use Illuminate\Database\Eloquent\JsonEncodingException;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
 use JsonSerializable;
 use LogicException;
@@ -32,7 +34,10 @@ use Spinen\ClickUp\Support\Relations\Relation;
  */
 abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializable
 {
-    use HasAttributes, HasClient, HasTimestamps, HidesAttributes;
+    use HasAttributes {
+        asDateTime as originalAsDateTime;
+    }
+    use HasClient, HasTimestamps, HidesAttributes;
 
     /**
      * Indicates if the model exists.
@@ -114,6 +119,13 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      * @var string|null
      */
     protected $responseKey = null;
+
+    /**
+     * Are timestamps in milliseconds?
+     *
+     * @var boolean
+     */
+    protected $timestampsInMilliseconds = true;
 
     /**
      * The name of the "created at" column.
@@ -210,6 +222,21 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     public function __unset($key)
     {
         $this->offsetUnset($key);
+    }
+
+    /**
+     * Return a timestamp as DateTime object.
+     *
+     * @param  mixed  $value
+     * @return \Illuminate\Support\Carbon
+     */
+    protected function asDateTime($value)
+    {
+        if (is_numeric($value) && $this->timestampsInMilliseconds) {
+            return Date::createFromTimestampMs($value);
+        }
+
+        return $this->originalAsDateTime($value);
     }
 
     /**

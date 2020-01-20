@@ -59,13 +59,13 @@ class Task extends Model
      */
     protected $casts = [
         'archived'      => 'boolean',
-        'date_closed'   => 'datetime:U',
-        'date_created'  => 'datetime:U',
-        'date_updated'  => 'datetime:U',
-        'due_date'      => 'datetime:U',
+        'date_closed'   => 'datetime:Uv',
+        'date_created'  => 'datetime:Uv',
+        'date_updated'  => 'datetime:Uv',
+        'due_date'      => 'datetime:Uv',
         'id'            => 'string',
         'orderindex'    => 'float',
-        'start_date'    => 'datetime:U',
+        'start_date'    => 'datetime:Uv',
         'team_id'       => 'integer',
         'time_estimate' => 'integer',
         'time_spent'    => 'integer',
