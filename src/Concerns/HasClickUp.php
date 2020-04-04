@@ -4,7 +4,7 @@ namespace Spinen\ClickUp\Concerns;
 
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\Encrypter;
 use Spinen\ClickUp\Api\Client as ClickUp;
 use Spinen\ClickUp\Exceptions\NoClientException;
 use Spinen\ClickUp\Support\Builder;
@@ -69,7 +69,7 @@ trait HasClickUp
     {
         return is_null($this->attributes['clickup_token'] ?? null)
             ? null
-            : Crypt::decrypt($this->attributes['clickup_token']);
+            : $this->resolveEncrypter()->decrypt($this->attributes['clickup_token']);
     }
 
     /**
@@ -80,6 +80,19 @@ trait HasClickUp
         $this->fillable[] = 'clickup_token';
         $this->hidden[] = 'clickup';
         $this->hidden[] = 'clickup_token';
+    }
+
+    /**
+     * Resolve the encrypter from the IoC
+     *
+     * We are staying away from the Crypt facade, so that we can support PHP 7.4 with Laravel 5.x
+     *
+     * @return Encrypter
+     */
+    protected function resolveEncrypter()
+    {
+        return Container::getInstance()
+                        ->make(Encrypter::class);
     }
 
     /**
@@ -94,6 +107,9 @@ trait HasClickUp
             $this->builder = null;
         }
 
-        $this->attributes['clickup_token'] = is_null($clickup_token) ? null : Crypt::encrypt($clickup_token);
+        $this->attributes['clickup_token'] = is_null($clickup_token)
+            ? null
+            : $this->resolveEncrypter()
+                   ->encrypt($clickup_token);
     }
 }
