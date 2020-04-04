@@ -4,6 +4,7 @@ namespace Spinen\ClickUp\Api;
 
 use GuzzleHttp\Client as Guzzle;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Str;
 use Spinen\ClickUp\Exceptions\TokenException;
 
 /**
@@ -250,6 +251,6 @@ class Client
      */
     public function uri($path = null, $url = null): string
     {
-        return rtrim(($url ?: $this->configs['url']), '/') . ($path [0] === '?' ? null : '/') . ltrim($path, '/');
+        return rtrim(($url ?: $this->configs['url']), '/') . (Str::startsWith($path, '?') ? null : '/') . ltrim($path, '/');
     }
 }
