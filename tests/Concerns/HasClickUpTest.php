@@ -3,7 +3,7 @@
 namespace Spinen\ClickUp\Concerns;
 
 use Illuminate\Container\Container;
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\Encrypter;
 use Mockery;
 use Mockery\Mock;
 use ReflectionClass;
@@ -23,6 +23,11 @@ class HasClickUpTest extends TestCase
      * @var Mock
      */
     protected $client_mock;
+
+    /**
+     * @var Mock
+     */
+    protected $encrypter_mock;
 
     /**
      * @var User
@@ -54,11 +59,16 @@ class HasClickUpTest extends TestCase
                            )
                            ->andReturnSelf();
 
+        $this->encrypter_mock = Mockery::mock(Encrypter::class);
+
         Container::getInstance()
                  ->instance(Builder::class, $this->builder_mock);
 
         Container::getInstance()
                  ->instance(ClickUp::class, $this->client_mock);
+
+        Container::getInstance()
+                 ->instance(Encrypter::class, $this->encrypter_mock);
     }
 
     /**
@@ -117,10 +127,10 @@ class HasClickUpTest extends TestCase
      */
     public function it_has_an_accessor_to_decrypt_clickup_token()
     {
-        Crypt::shouldReceive('decrypt')
-             ->once()
-             ->with($this->trait->attributes['clickup_token'])
-             ->andReturn('decrypted');
+        $this->encrypter_mock->shouldReceive('decrypt')
+                             ->once()
+                             ->with($this->trait->attributes['clickup_token'])
+                             ->andReturn('decrypted');
 
         $this->trait->getClickupTokenAttribute();
     }
@@ -132,9 +142,9 @@ class HasClickUpTest extends TestCase
     {
         $this->trait->attributes['clickup_token'] = null;
 
-        Crypt::shouldReceive('decrypt')
-             ->never()
-             ->withAnyArgs();
+        $this->encrypter_mock->shouldReceive('decrypt')
+                             ->never()
+                             ->withAnyArgs();
 
         $this->trait->getClickupTokenAttribute();
     }
@@ -144,14 +154,14 @@ class HasClickUpTest extends TestCase
      */
     public function it_has_mutator_to_encypt_clickup_token()
     {
-        Crypt::shouldReceive('encrypt')
-             ->once()
-             ->withArgs(
-                 [
-                     'unencrypted',
-                 ]
-             )
-             ->andReturn('encrypted');
+        $this->encrypter_mock->shouldReceive('encrypt')
+                             ->once()
+                             ->withArgs(
+                                 [
+                                     'unencrypted',
+                                 ]
+                             )
+                             ->andReturn('encrypted');
 
         $this->trait->setClickupTokenAttribute('unencrypted');
     }
@@ -161,9 +171,9 @@ class HasClickUpTest extends TestCase
      */
     public function it_does_not_mutate_a_null_clickup_token()
     {
-        Crypt::shouldReceive('encrypt')
-             ->never()
-             ->withAnyArgs();
+        $this->encrypter_mock->shouldReceive('encrypt')
+                             ->never()
+                             ->withAnyArgs();
 
         $this->trait->setClickupTokenAttribute(null);
     }
@@ -173,8 +183,8 @@ class HasClickUpTest extends TestCase
      */
     public function it_invalidates_builder_cache_when_setting_clickup_token()
     {
-        Crypt::shouldReceive('encrypt')
-             ->withAnyArgs();
+        $this->encrypter_mock->shouldReceive('encrypt')
+                             ->withAnyArgs();
 
         // Force cache
         $this->trait->clickup();
