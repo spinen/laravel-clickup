@@ -41,12 +41,12 @@ class TaskList extends Model
      */
     protected $casts = [
         'archived'          => 'boolean',
-        'due_date'          => 'datetime:U',
+        'due_date'          => 'datetime:Uv',
         'due_date_time'     => 'boolean',
         'id'                => 'integer',
         'orderindex'        => 'float',
         'override_statuses' => 'boolean',
-        'start_date'        => 'datetime:U',
+        'start_date'        => 'datetime:Uv',
         'start_date_time'   => 'boolean',
         'task_count'        => 'integer',
     ];

@@ -43,7 +43,7 @@ class View extends Model
      * @var array
      */
     protected $casts = [
-        'date_created'   => 'datetime:U',
+        'date_created'   => 'datetime:Uv',
         'date_protected' => 'integer',
         'id'             => 'string',
         'orderindex'     => 'float',

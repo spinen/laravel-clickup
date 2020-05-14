@@ -53,19 +53,19 @@ class Goal extends Model
     protected $casts = [
         'archived'          => 'boolean',
         'creator'           => 'integer',
-        'date_created'      => 'datetime:U',
-        'due_date'          => 'datetime:U',
+        'date_created'      => 'datetime:Uv',
+        'due_date'          => 'datetime:Uv',
         'folder_id'         => 'integer',
         'id'                => 'string',
         'key_result_count'  => 'integer',
-        'last_update'       => 'datetime:U',
+        'last_update'       => 'datetime:Uv',
         'multiple_owners'   => 'boolean',
         'owner'             => 'integer',
         'percent_completed' => 'float',
         'pinned'            => 'boolean',
         'pretty_id'         => 'integer',
         'private'           => 'boolean',
-        'start_date'        => 'datetime:U',
+        'start_date'        => 'datetime:Uv',
         'team_id'           => 'integer',
     ];
 

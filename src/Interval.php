@@ -30,10 +30,10 @@ class Interval extends Model
      * @var array
      */
     protected $casts = [
-        'date_added' => 'datetime:U',
-        'end'        => 'datetime:U',
+        'date_added' => 'datetime:Uv',
+        'end'        => 'datetime:Uv',
         'id'         => 'string',
-        'start'      => 'datetime:U',
+        'start'      => 'datetime:Uv',
         'time'       => 'integer',
     ];
 
