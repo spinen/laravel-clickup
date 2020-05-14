@@ -4,7 +4,6 @@ namespace Spinen\ClickUp\Support;
 
 use DateTime;
 use GuzzleHttp\Exception\InvalidArgumentException;
-use Illuminate\Database\Eloquent\JsonEncodingException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Date;
 use LogicException;
@@ -779,49 +778,51 @@ class ModelTestTest extends TestCase
         $carbon = Carbon::now();
         $datetime = new DateTime();
         return [
-            'carbon' => [
-                'value' => $carbon,
+            'carbon'       => [
+                'value'                    => $carbon,
                 'timestampsInMilliseconds' => true,
-                'expected' => Date::instance($carbon),
+                'expected'                 => Date::instance($carbon),
             ],
-            'datetime' => [
-                'value' => $datetime,
+            'datetime'     => [
+                'value'                    => $datetime,
                 'timestampsInMilliseconds' => true,
-                'expected' => Date::parse(
-                    $datetime->format('Y-m-d H:i:s.u'), $datetime->getTimezone()
-                ),
+                'expected'                 => Date::parse($datetime->format('Y-m-d H:i:s.u'), $datetime->getTimezone()),
             ],
-            'carbon2' => [
-                'value' => $carbon,
+            'carbon2'      => [
+                'value'                    => $carbon,
                 'timestampsInMilliseconds' => false,
-                'expected' => Date::instance($carbon),
+                'expected'                 => Date::instance($carbon),
             ],
-            'datetime2' => [
-                'value' => $datetime,
+            'datetime2'    => [
+                'value'                    => $datetime,
                 'timestampsInMilliseconds' => false,
-                'expected' => Date::parse(
-                    $datetime->format('Y-m-d H:i:s.u'), $datetime->getTimezone()
-                ),
+                'expected'                 => Date::parse($datetime->format('Y-m-d H:i:s.u'), $datetime->getTimezone()),
             ],
-            'timestamp' => [
-                'value' => 1579542588,
+            'timestamp'    => [
+                'value'                    => 1579542588,
                 'timestampsInMilliseconds' => false,
-                'expected' => Date::createFromTimestamp(1579542588),
+                'expected'                 => Date::createFromTimestamp(1579542588),
             ],
             'timestamp_ms' => [
-                'value' => 1579542588123,
+                'value'                    => 1579542588123,
                 'timestampsInMilliseconds' => true,
-                'expected' => Date::createFromTimestampMs(1579542588123),
+                'expected'                 => Date::createFromTimestampMs(1579542588123),
             ],
-            'standard' => [
-                'value' => '2020-02-01',
+            'standard_ms'  => [
+                'value'                    => '2020-02-01',
                 'timestampsInMilliseconds' => true,
-                'expected' =>  Date::instance(Carbon::createFromFormat('Y-m-d', '2020-02-01')->startOfDay()),
+                'expected'                 => Date::instance(
+                    Carbon::createFromFormat('Y-m-d', '2020-02-01')
+                          ->startOfDay()
+                ),
             ],
-            'standard' => [
-                'value' => '2020-02-01',
+            'standard'     => [
+                'value'                    => '2020-02-01',
                 'timestampsInMilliseconds' => false,
-                'expected' =>  Date::instance(Carbon::createFromFormat('Y-m-d', '2020-02-01')->startOfDay()),
+                'expected'                 => Date::instance(
+                    Carbon::createFromFormat('Y-m-d', '2020-02-01')
+                          ->startOfDay()
+                ),
             ],
         ];
     }
@@ -833,9 +834,11 @@ class ModelTestTest extends TestCase
     public function it_casts_to_datetime_from_various_values($value, $timestampInMilliseconds, $expected)
     {
         $model = new Model();
-        $model->setRawAttributes([
-            'datetime_value' => $value
-        ]);
+        $model->setRawAttributes(
+            [
+                'datetime_value' => $value,
+            ]
+        );
 
         $reflection = new ReflectionObject($model);
 

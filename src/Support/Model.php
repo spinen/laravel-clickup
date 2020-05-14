@@ -149,8 +149,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      */
     public function __construct(array $attributes = [], Model $parentModel = null)
     {
-        // All dates from API comes as epoch
-        $this->dateFormat = 'U';
+        // All dates from API comes as epoch with milliseconds
+        $this->dateFormat = 'Uv';
         // None of this  models will use timestamps, but need the date casting
         $this->timestamps = false;
 
