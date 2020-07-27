@@ -264,7 +264,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      */
     public function belongsTo($related, $foreignKey = null): BelongsTo
     {
-        $foreignKey = is_null($foreignKey) ? $this->assumeForeignKey($related) : $foreignKey;
+        $foreignKey = $foreignKey ?? $this->assumeForeignKey($related);
 
         $builder = (new Builder())->setClass($related)
                                   ->setClient($this->getClient());
@@ -285,7 +285,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      */
     public function childOf($related, $foreignKey = null): ChildOf
     {
-        $foreignKey = is_null($foreignKey) ? $this->assumeForeignKey($related) : $foreignKey;
+        $foreignKey = $foreignKey ?? $this->assumeForeignKey($related);
 
         $builder = (new Builder())->setClass($related)
                                   ->setClient($this->getClient())
