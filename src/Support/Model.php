@@ -228,7 +228,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      * Return a timestamp as DateTime object.
      *
      * @param  mixed  $value
-     * @return \Illuminate\Support\Carbon
+     * @return Carbon
      */
     protected function asDateTime($value)
     {
@@ -264,7 +264,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      */
     public function belongsTo($related, $foreignKey = null): BelongsTo
     {
-        $foreignKey = is_null($foreignKey) ? $this->assumeForeignKey($related) : $foreignKey;
+        $foreignKey = $foreignKey ?? $this->assumeForeignKey($related);
 
         $builder = (new Builder())->setClass($related)
                                   ->setClient($this->getClient());
@@ -285,7 +285,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      */
     public function childOf($related, $foreignKey = null): ChildOf
     {
-        $foreignKey = is_null($foreignKey) ? $this->assumeForeignKey($related) : $foreignKey;
+        $foreignKey = $foreignKey ?? $this->assumeForeignKey($related);
 
         $builder = (new Builder())->setClass($related)
                                   ->setClient($this->getClient())
@@ -428,22 +428,12 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         $relation = $this->{$method}();
 
         if (!$relation instanceof Relation) {
-            if (is_null($relation)) {
-                throw new LogicException(
-                    sprintf(
-                        '%s::%s must return a relationship instance, but "null" was returned. Was the "return" keyword used?',
-                        static::class,
-                        $method
-                    )
-                );
-            }
+            $exception_message = is_null($relation)
+                ? '%s::%s must return a relationship instance, but "null" was returned. Was the "return" keyword used?'
+                : '%s::%s must return a relationship instance.';
 
             throw new LogicException(
-                sprintf(
-                    '%s::%s must return a relationship instance.',
-                    static::class,
-                    $method
-                )
+                sprintf($exception_message, static::class, $method)
             );
         }
 
@@ -678,6 +668,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
             }
 
             if ($this->exists) {
+                // TODO: If we get null from the PUT, throw/handle exception
                 $response = $this->getClient()
                                  ->put($this->getPath(), $this->getDirty());
 
