@@ -428,22 +428,12 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         $relation = $this->{$method}();
 
         if (!$relation instanceof Relation) {
-            if (is_null($relation)) {
-                throw new LogicException(
-                    sprintf(
-                        '%s::%s must return a relationship instance, but "null" was returned. Was the "return" keyword used?',
-                        static::class,
-                        $method
-                    )
-                );
-            }
+            $exception_message = is_null($relation)
+                ? '%s::%s must return a relationship instance, but "null" was returned. Was the "return" keyword used?'
+                : '%s::%s must return a relationship instance.';
 
             throw new LogicException(
-                sprintf(
-                    '%s::%s must return a relationship instance.',
-                    static::class,
-                    $method
-                )
+                sprintf($exception_message, static::class, $method)
             );
         }
 
