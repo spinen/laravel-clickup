@@ -63,7 +63,8 @@ trait HasClickUp
     /**
      * Accessor for ClickUpToken.
      *
-     * @return string
+     * @throws BindingResolutionException
+     * @return string|null
      */
     public function getClickupTokenAttribute()
     {
@@ -91,6 +92,7 @@ trait HasClickUp
      * We are staying away from the Crypt facade, so that we can support PHP 7.4 with Laravel 5.x
      *
      * @return Encrypter
+     * @throws BindingResolutionException
      */
     protected function resolveEncrypter()
     {
@@ -102,6 +104,7 @@ trait HasClickUp
      * Mutator for ClickUpToken.
      *
      * @param string $clickup_token
+     * @throws BindingResolutionException
      */
     public function setClickupTokenAttribute($clickup_token)
     {
