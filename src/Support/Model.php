@@ -678,6 +678,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
             }
 
             if ($this->exists) {
+                // TODO: If we get null from the PUT, throw/handle exception
                 $response = $this->getClient()
                                  ->put($this->getPath(), $this->getDirty());
 
