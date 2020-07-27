@@ -67,10 +67,12 @@ trait HasClickUp
      */
     public function getClickupTokenAttribute()
     {
-        return is_null($this->attributes['clickup_token'] ?? null)
-            ? null
-            : $this->resolveEncrypter()
-                   ->decrypt($this->attributes['clickup_token']);
+        if (! is_null($this->attributes['clickup_token'])) {
+            return $this->resolveEncrypter()
+                        ->decrypt($this->attributes['clickup_token']);
+        }
+
+        return null;
     }
 
     /**
