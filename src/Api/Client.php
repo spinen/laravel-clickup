@@ -241,8 +241,9 @@ class Client
     /**
      * URL to ClickUp
      *
-     * If path is passed in, then append it to the end.  By default, it will use the url
+     * If path is passed in, then append it to the end. By default, it will use the url
      * in the configs, but if an url is passed in as second parameter, then it is used.
+     * If no url is found, it will use the hard-coded v2 ClickUp API URL.
      *
      * @param string|null $path
      * @param string|null $url
@@ -251,6 +252,8 @@ class Client
      */
     public function uri($path = null, $url = null): string
     {
-        return rtrim(($url ?: $this->configs['url']), '/') . (Str::startsWith($path, '?') ? null : '/') . ltrim($path, '/');
+        $url = $url ?? $this->configs['url'] ?? 'https://api.clickup.com/api/v2';
+
+        return rtrim($url, '/') . (Str::startsWith($path, '?') ? null : '/') . ltrim($path, '/');
     }
 }
