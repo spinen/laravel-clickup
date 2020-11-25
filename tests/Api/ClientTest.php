@@ -81,7 +81,7 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function it_expects_the_first_argument_tobe_an_array()
+    public function it_expects_the_first_argument_to_be_an_array()
     {
         $this->expectException(TypeError::class);
 
@@ -91,7 +91,7 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function it_expects_the_second_argument_tobe_a_guzzle()
+    public function it_expects_the_second_argument_to_be_a_guzzle()
     {
         $this->expectException(TypeError::class);
 
@@ -215,8 +215,8 @@ class ClientTest extends TestCase
         $this->assertEquals('http://some/place/resource', $this->client->uri('/resource'), 'no double slash');
         $this->assertEquals('http://some/place/resource/', $this->client->uri('resource/'), 'leaves end slash');
         $this->assertEquals(
-            'http://some/place?paramater=value',
-            $this->client->uri('?paramater=value'),
+            'http://some/place?parameter=value',
+            $this->client->uri('?parameter=value'),
             'query string'
         );
         $this->assertEquals(
