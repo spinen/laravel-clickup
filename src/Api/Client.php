@@ -219,7 +219,10 @@ class Client
      */
     public function setConfigs(array $configs): self
     {
-        $this->configs = $configs;
+        // Replace empty strings with nulls in config values
+        $this->configs = array_map(function($value) {
+            return $value === "" ? null : $value;
+        }, $configs);
 
         return $this;
     }

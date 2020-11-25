@@ -167,6 +167,20 @@ class ClientTest extends TestCase
     /**
      * @test
      */
+    public function it_sets_url_to_default_value_if_its_an_empty_string()
+    {
+        $this->client->setConfigs(
+            [
+                'url' => "",
+            ]
+        );
+
+        $this->assertEquals('https://api.clickup.com/api/v2/', $this->client->uri());
+    }
+
+    /**
+     * @test
+     */
     public function it_allows_setting_the_token()
     {
         $token = 'pk_token';
