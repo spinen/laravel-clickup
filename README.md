@@ -159,7 +159,7 @@ Psy Shell v0.9.9 (PHP 7.3.11 — cli) by Justin Hileman
 
 ### Personal Token
 
-If you do not what to use the OAuth flow, then you can allow the user to provide you a personal token that you can save on the `User`.
+If you do not want to use the OAuth flow, then you can allow the user to provide you a personal token that you can save on the `User`.
 
 ```bash
 $ php artisan tinker
