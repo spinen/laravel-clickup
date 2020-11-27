@@ -81,7 +81,7 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function it_expects_the_first_argument_tobe_an_array()
+    public function it_expects_the_first_argument_to_be_an_array()
     {
         $this->expectException(TypeError::class);
 
@@ -91,7 +91,7 @@ class ClientTest extends TestCase
     /**
      * @test
      */
-    public function it_expects_the_second_argument_tobe_a_guzzle()
+    public function it_expects_the_second_argument_to_be_a_guzzle()
     {
         $this->expectException(TypeError::class);
 
@@ -153,6 +153,34 @@ class ClientTest extends TestCase
     /**
      * @test
      */
+    public function it_sets_url_to_default_value_if_not_passed_in()
+    {
+        $this->client->setConfigs(
+            [
+                'url' => null,
+            ]
+        );
+
+        $this->assertEquals('https://api.clickup.com/api/v2/', $this->client->uri());
+    }
+
+    /**
+     * @test
+     */
+    public function it_sets_url_to_default_value_if_its_an_empty_string()
+    {
+        $this->client->setConfigs(
+            [
+                'url' => "",
+            ]
+        );
+
+        $this->assertEquals('https://api.clickup.com/api/v2/', $this->client->uri());
+    }
+
+    /**
+     * @test
+     */
     public function it_allows_setting_the_token()
     {
         $token = 'pk_token';
@@ -201,8 +229,8 @@ class ClientTest extends TestCase
         $this->assertEquals('http://some/place/resource', $this->client->uri('/resource'), 'no double slash');
         $this->assertEquals('http://some/place/resource/', $this->client->uri('resource/'), 'leaves end slash');
         $this->assertEquals(
-            'http://some/place?paramater=value',
-            $this->client->uri('?paramater=value'),
+            'http://some/place?parameter=value',
+            $this->client->uri('?parameter=value'),
             'query string'
         );
         $this->assertEquals(

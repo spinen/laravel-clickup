@@ -130,7 +130,7 @@ Psy Shell v0.9.9 (PHP 7.3.11 — cli) by Justin Hileman
 => Spinen\ClickUp\Api\Client {#2363}
 ```
 
-The `$clickup` instance will work exaclty like all of the examples below, so if you are not using Laravel, then you can use the package once you bootstrap the client.
+The `$clickup` instance will work exactly like all of the examples below, so if you are not using Laravel, then you can use the package once you bootstrap the client.
 
 
 ## Authentication
@@ -139,7 +139,7 @@ ClickUp has 2 ways to authenticate when making API calls... 1) OAuth token or 2)
 
 ### OAuth
 
-There is a middleware named `clickup` that you can apply to any route that verifies that the user has a `clickup_token`, and if the user does not, then it redirects the user to ClickUp's OAuth page with the `client_id` where the user selectes the team(s) to link with your applciation.  Upon selecting the team(s), the user is rediected to `/clickup/sso/<user_id>?code=<OAuth Code>` where the system converts the `code` to a token & saves it to the user.  Upon saving the `clickup_token`, the user is redirected to the inital page that was proteted by the middleware.
+There is a middleware named `clickup` that you can apply to any route that verifies that the user has a `clickup_token`, and if the user does not, then it redirects the user to ClickUp's OAuth page with the `client_id` where the user selects the team(s) to link with your application.  Upon selecting the team(s), the user is redirected to `/clickup/sso/<user_id>?code=<OAuth Code>` where the system converts the `code` to a token & saves it to the user.  Upon saving the `clickup_token`, the user is redirected to the initial page that was protected by the middleware.
 
 > NOTE: You will need to have the `auth` middleware on the routes as the `User` is needed to see if there is a `clickup_token`.
 
@@ -159,7 +159,7 @@ Psy Shell v0.9.9 (PHP 7.3.11 — cli) by Justin Hileman
 
 ### Personal Token
 
-If you do not what to use the OAuth flow, then you can allow the user to provide you a personal token that you can save on the `User`.
+If you do not want to use the OAuth flow, then you can allow the user to provide you a personal token that you can save on the `User`.
 
 ```bash
 $ php artisan tinker
