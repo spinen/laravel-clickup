@@ -2,6 +2,7 @@
 
 namespace Spinen\ClickUp\Http\Controllers;
 
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
@@ -45,7 +46,7 @@ class ClickUpControllerTest extends TestCase
 
         $this->request_mock = Mockery::mock(Request::class);
 
-        $this->user_mock = Mockery::mock('App\User');
+        $this->user_mock = Mockery::mock(User::class);
 
         $this->controller = new ClickUpController();
     }
@@ -109,6 +110,16 @@ class ClickUpControllerTest extends TestCase
                         ->once()
                         ->withNoArgs()
                         ->andReturnTrue();
+
+        $this->user_mock->shouldReceive('setAttribute')
+                        ->with('clickup_token', 'oauth_token')
+                        ->once()
+                        ->andReturn($this->user_mock);
+
+        $this->user_mock->shouldReceive('getAttribute')
+                        ->with('clickup_token')
+                        ->once()
+                        ->andReturn('oauth_token');
 
         $this->redirector_mock->shouldIgnoreMissing();
 
