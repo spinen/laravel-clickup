@@ -151,7 +151,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     {
         // All dates from API comes as epoch with milliseconds
         $this->dateFormat = 'Uv';
-        // None of this  models will use timestamps, but need the date casting
+        // None of these models will use timestamps, but need the date casting
         $this->timestamps = false;
 
         $this->syncOriginal();

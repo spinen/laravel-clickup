@@ -63,12 +63,12 @@ class Model extends BaseModel
         return $this->hasMany(Model::class);
     }
 
-    public function nonrealation()
+    public function nonrelation()
     {
         return new stdClass();
     }
 
-    public function nullrealation()
+    public function nullrelation()
     {
         return null;
     }
