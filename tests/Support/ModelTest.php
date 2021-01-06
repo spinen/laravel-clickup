@@ -203,7 +203,7 @@ class ModelTestTest extends TestCase
     {
         $this->expectException(LogicException::class);
 
-        $this->model->nonrealation;
+        $this->model->nonrelation;
     }
 
     /**
@@ -213,7 +213,7 @@ class ModelTestTest extends TestCase
     {
         $this->expectException(LogicException::class);
 
-        $this->model->nullrealation;
+        $this->model->nullrelation;
     }
 
     /**
