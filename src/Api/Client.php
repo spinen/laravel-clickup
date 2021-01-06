@@ -74,7 +74,7 @@ class Client
      */
     public function get($path): ?array
     {
-        return $this->request($path, null, 'GET');
+        return $this->request($path, [], 'GET');
     }
 
     /**
