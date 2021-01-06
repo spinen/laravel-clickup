@@ -195,7 +195,7 @@ class Client
                             'Authorization' => $this->token,
                             'Content-Type'  => 'application/json',
                         ],
-                        'body'    => json_encode($data),
+                        'body'    => json_encode($data ?? []),
                     ]
                 )
                              ->getBody()
