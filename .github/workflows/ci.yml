@@ -40,7 +40,7 @@ jobs:
         uses: symfonycorp/security-checker-action@v2
         if: ${{ matrix.stability == 'prefer-stable' }}
         with:
-          composer-lock: './composer.lock'
+          composer: './composer.lock'
 
       - name: Execute tests
         run: vendor/bin/phpunit --coverage-clover=coverage.clover --verbose
