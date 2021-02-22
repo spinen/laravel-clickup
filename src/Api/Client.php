@@ -74,7 +74,7 @@ class Client
      */
     public function get($path): ?array
     {
-        return $this->request($path, null, 'GET');
+        return $this->request($path, [], 'GET');
     }
 
     /**
@@ -195,7 +195,7 @@ class Client
                             'Authorization' => $this->token,
                             'Content-Type'  => 'application/json',
                         ],
-                        'body'    => json_encode($data),
+                        'body'    => json_encode($data ?? []),
                     ]
                 )
                              ->getBody()

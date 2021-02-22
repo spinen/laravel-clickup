@@ -37,7 +37,7 @@ class Interval extends Model
         'time'       => 'integer',
     ];
 
-    // TODO: Figure out how to setup reflation to task
+    // TODO: Figure out how to setup relation to task
     /**
      * @return ChildOf
      * @throws InvalidRelationshipException
