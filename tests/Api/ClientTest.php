@@ -259,7 +259,7 @@ class ClientTest extends TestCase
                                           'Authorization' => $token,
                                           'Content-Type'  => 'application/json',
                                       ],
-                                      'body'    => json_encode($data ?? []),
+                                      'body'    => empty($options) ? null : json_encode($options),
                                   ],
                               ]
                           )
