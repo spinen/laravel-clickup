@@ -3,6 +3,7 @@
 namespace Spinen\ClickUp\Http\Middleware;
 
 use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
@@ -63,7 +64,7 @@ class FilterTest extends TestCase
         $this->request_mock = Mockery::mock(Request::class);
         $this->response_mock = Mockery::mock(RedirectResponse::class);
         $this->url_generator_mock = Mockery::mock(UrlGenerator::class);
-        $this->user_mock = Mockery::mock('App\User');
+        $this->user_mock = Mockery::mock(User::class);
 
         $this->request_mock->shouldReceive('user')
                            ->withNoArgs()
@@ -89,6 +90,7 @@ class FilterTest extends TestCase
             $this->assertEquals($this->request_mock, $request);
         };
 
+        $this->mockUserAttributeMutators('token');
         $this->user_mock->clickup_token = 'token';
 
         $this->filter->handle($this->request_mock, $next_middleware);
@@ -104,6 +106,7 @@ class FilterTest extends TestCase
             $this->assertTrue(false);
         };
 
+        $this->mockUserAttributeMutators();
         $this->user_mock->clickup_token = null;
 
         $this->clickup_mock->shouldIgnoreMissing();
@@ -127,6 +130,7 @@ class FilterTest extends TestCase
             $this->assertTrue(false);
         };
 
+        $this->mockUserAttributeMutators();
         $this->user_mock->clickup_token = null;
 
         $this->clickup_mock->shouldIgnoreMissing();
@@ -162,6 +166,7 @@ class FilterTest extends TestCase
             $this->assertTrue(false);
         };
 
+        $this->mockUserAttributeMutators();
         $this->user_mock->clickup_token = null;
 
 //        $this->clickup_mock->shouldIgnoreMissing();
@@ -201,5 +206,23 @@ class FilterTest extends TestCase
                               ->andReturn($this->response_mock);
 
         $this->filter->handle($this->request_mock, $next_middleware);
+    }
+
+    /**
+     * Mock out the models setAttribute and getAttribute mutators with the given token
+     *
+     * @param string|null $token
+     */
+    protected function mockUserAttributeMutators($token = null): void
+    {
+        $this->user_mock->shouldReceive('setAttribute')
+                        ->with('clickup_token', $token)
+                        ->once()
+                        ->andReturn($this->user_mock);
+
+        $this->user_mock->shouldReceive('getAttribute')
+                        ->with('clickup_token')
+                        ->once()
+                        ->andReturn($token);
     }
 }
