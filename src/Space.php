@@ -48,7 +48,7 @@ class Space extends Model
      *
      * @var string
      */
-    protected $path = '/space';
+    protected $path = '/team/{team-id}/space';
 
     /**
      * Accessor for Members.
