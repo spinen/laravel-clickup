@@ -649,6 +649,18 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     }
 
     /**
+     * Laravel allows the resolver to be set at runtime, so we just return null
+     *
+     * @param  string  $class
+     * @param  string  $key
+     * @return null
+     */
+    public function relationResolver($class, $key)
+    {
+        return null;
+    }
+
+    /**
      * Save the model in ClickUp
      *
      * @return bool
@@ -714,7 +726,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
         return true;
     }
-
 
     /**
      * Set the readonly
