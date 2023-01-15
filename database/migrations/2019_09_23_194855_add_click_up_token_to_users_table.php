@@ -2,7 +2,9 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\ColumnDefinition;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Fluent;
 
 /**
  * Class AddClickUpTokenToUsersTable
@@ -20,11 +22,9 @@ class AddClickUpTokenToUsersTable extends Migration
     {
         Schema::table(
             'users',
-            function (Blueprint $table) {
-                $table->string('clickup_token', 1024)
+            fn (Blueprint $table): ColumnDefinition => $table->string('clickup_token', 1024)
                       ->after('password')
-                      ->nullable();
-            }
+                      ->nullable()
         );
     }
 
@@ -37,9 +37,7 @@ class AddClickUpTokenToUsersTable extends Migration
     {
         Schema::table(
             'users',
-            function (Blueprint $table) {
-                $table->dropColumn('clickup_token');
-            }
+            fn (Blueprint $table): Fluent => $table->dropColumn('clickup_token')
         );
     }
 }

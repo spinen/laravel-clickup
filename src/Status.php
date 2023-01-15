@@ -7,7 +7,6 @@ use Spinen\ClickUp\Support\Model;
 /**
  * Class Status
  *
- * @package Spinen\ClickUp
  *
  * @property string $status
  * @property string $color

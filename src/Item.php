@@ -10,10 +10,9 @@ use Spinen\ClickUp\Support\Model;
 /**
  * Class Item
  *
- * @package Spinen\ClickUp
  *
- * @property boolean $resolved
- * @property boolean $unresolved
+ * @property bool $resolved
+ * @property bool $unresolved
  * @property Carbon $date_created
  * @property Collection $children
  * @property float $orderindex
@@ -31,10 +30,10 @@ class Item extends Model
      */
     protected $casts = [
         'date_created' => 'datetime:Uv',
-        'id'           => 'string',
-        'orderindex'   => 'float',
-        'resolved'     => 'boolean',
-        'unresolved'   => 'boolean',
+        'id' => 'string',
+        'orderindex' => 'float',
+        'resolved' => 'boolean',
+        'unresolved' => 'boolean',
     ];
 
     /**
@@ -58,9 +57,8 @@ class Item extends Model
     /**
      * Accessor for Assignee.
      *
-     * @param array $assignee
+     * @param  array  $assignee
      *
-     * @return Member
      * @throws NoClientException
      */
     public function getAssigneeAttribute($assignee): Member
@@ -71,9 +69,7 @@ class Item extends Model
     /**
      * Accessor for Children.
      *
-     * @param array $children
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function getChildrenAttribute(array $children): Collection
@@ -84,8 +80,7 @@ class Item extends Model
     /**
      * Accessor for Parent.
      *
-     * @param string $parent
-     *
+     * @param  string  $parent
      * @return Item
      */
     // TODO: Figure out how to make this relationship work

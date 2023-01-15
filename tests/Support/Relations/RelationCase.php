@@ -6,7 +6,6 @@ use Mockery;
 use Mockery\Mock;
 use Spinen\ClickUp\Support\Builder;
 use Spinen\ClickUp\Support\Model;
-use Spinen\ClickUp\Support\Relations\Stubs\Relation;
 use Spinen\ClickUp\TestCase;
 
 class RelationCase extends TestCase

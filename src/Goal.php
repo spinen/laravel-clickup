@@ -14,15 +14,14 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Goal
  *
- * @package Spinen\ClickUp
  *
  * @property array $history
  * @property array $key_results
  * @property array $reactions
- * @property boolean $archived
- * @property boolean $multiple_owners
- * @property boolean $pinned
- * @property boolean $private
+ * @property bool $archived
+ * @property bool $multiple_owners
+ * @property bool $pinned
+ * @property bool $private
  * @property Carbon $date_created
  * @property Carbon $due_date
  * @property Carbon $last_update
@@ -31,12 +30,12 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
  * @property Collection $owners
  * @property float $percent_completed
  * @property Folder $folder
- * @property integer $creator
- * @property integer $folder_id
- * @property integer $key_result_count
- * @property integer $owner
- * @property integer $pretty_id
- * @property integer $team_id
+ * @property int $creator
+ * @property int $folder_id
+ * @property int $key_result_count
+ * @property int $owner
+ * @property int $pretty_id
+ * @property int $team_id
  * @property string $color
  * @property string $description
  * @property string $id
@@ -51,22 +50,22 @@ class Goal extends Model
      * @var array
      */
     protected $casts = [
-        'archived'          => 'boolean',
-        'creator'           => 'integer',
-        'date_created'      => 'datetime:Uv',
-        'due_date'          => 'datetime:Uv',
-        'folder_id'         => 'integer',
-        'id'                => 'string',
-        'key_result_count'  => 'integer',
-        'last_update'       => 'datetime:Uv',
-        'multiple_owners'   => 'boolean',
-        'owner'             => 'integer',
+        'archived' => 'boolean',
+        'creator' => 'integer',
+        'date_created' => 'datetime:Uv',
+        'due_date' => 'datetime:Uv',
+        'folder_id' => 'integer',
+        'id' => 'string',
+        'key_result_count' => 'integer',
+        'last_update' => 'datetime:Uv',
+        'multiple_owners' => 'boolean',
+        'owner' => 'integer',
         'percent_completed' => 'float',
-        'pinned'            => 'boolean',
-        'pretty_id'         => 'integer',
-        'private'           => 'boolean',
-        'start_date'        => 'datetime:Uv',
-        'team_id'           => 'integer',
+        'pinned' => 'boolean',
+        'pretty_id' => 'integer',
+        'private' => 'boolean',
+        'start_date' => 'datetime:Uv',
+        'team_id' => 'integer',
     ];
 
     // TODO: Setup creator & owner as a "BelongsTo" (need API resource to look up a Member)
@@ -81,9 +80,7 @@ class Goal extends Model
     /**
      * Accessor for Owners.
      *
-     * @param array $owners
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function getOwnersAttribute(array $owners): Collection
@@ -94,9 +91,7 @@ class Goal extends Model
     /**
      * Accessor for Members.
      *
-     * @param array $members
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function getMembersAttribute(array $members): Collection
@@ -105,7 +100,6 @@ class Goal extends Model
     }
 
     /**
-     * @return BelongsTo
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -116,7 +110,6 @@ class Goal extends Model
     }
 
     /**
-     * @return ChildOf
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

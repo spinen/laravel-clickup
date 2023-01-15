@@ -13,17 +13,16 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 /**
  * Class Folder
  *
- * @package Spinen\ClickUp
  *
- * @property boolean $archived
- * @property boolean $hidden
- * @property boolean $override_statuses
+ * @property bool $archived
+ * @property bool $hidden
+ * @property bool $override_statuses
  * @property Collection $lists
  * @property Collection $statuses
  * @property Collection $views
  * @property float $orderindex
- * @property integer $id
- * @property integer $task_count
+ * @property int $id
+ * @property int $task_count
  * @property Space $space
  * @property string $name
  */
@@ -35,12 +34,12 @@ class Folder extends Model
      * @var array
      */
     protected $casts = [
-        'archived'          => 'boolean',
-        'hidden'            => 'boolean',
-        'id'                => 'integer',
-        'orderindex'        => 'float',
+        'archived' => 'boolean',
+        'hidden' => 'boolean',
+        'id' => 'integer',
+        'orderindex' => 'float',
         'override_statuses' => 'boolean',
-        'task_count'        => 'integer',
+        'task_count' => 'integer',
     ];
 
     /**
@@ -53,9 +52,7 @@ class Folder extends Model
     /**
      * Accessor for Statuses.
      *
-     * @param array $statuses
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function getStatusesAttribute(array $statuses): Collection
@@ -66,9 +63,7 @@ class Folder extends Model
     /**
      * Accessor for Lists.
      *
-     * @param array $lists
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function getListsAttribute(array $lists): Collection
@@ -77,7 +72,6 @@ class Folder extends Model
     }
 
     /**
-     * @return ChildOf
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -88,8 +82,6 @@ class Folder extends Model
     }
 
     /**
-     * @return HasMany
-
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

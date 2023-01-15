@@ -12,13 +12,12 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Comment
  *
- * @package Spinen\ClickUp
  *
  * @property array $comments
  * @property array $relations
- * @property boolean $resolved
+ * @property bool $resolved
  * @property Carbon $date
- * @property integer $id
+ * @property int $id
  * @property Member $assigned_by
  * @property Member $assignee
  * @property Member $user
@@ -33,8 +32,8 @@ class Comment extends Model
      * @var array
      */
     protected $casts = [
-        'date'     => 'datetime:Uv',
-        'id'       => 'integer',
+        'date' => 'datetime:Uv',
+        'id' => 'integer',
         'resolved' => 'boolean',
     ];
 
@@ -48,9 +47,8 @@ class Comment extends Model
     /**
      * Accessor for Assignee.
      *
-     * @param array $assignee
+     * @param  array  $assignee
      *
-     * @return Member
      * @throws NoClientException
      */
     public function getAssigneeAttribute($assignee): Member
@@ -61,9 +59,8 @@ class Comment extends Model
     /**
      * Accessor for AssignedBy.
      *
-     * @param array $assigned_by
+     * @param  array  $assigned_by
      *
-     * @return Member
      * @throws NoClientException
      */
     public function getAssignedByAttribute($assigned_by): Member
@@ -74,9 +71,8 @@ class Comment extends Model
     /**
      * Accessor for User.
      *
-     * @param array $user
+     * @param  array  $user
      *
-     * @return Member
      * @throws NoClientException
      */
     public function getUserAttribute($user): Member
@@ -86,6 +82,7 @@ class Comment extends Model
 
     /**
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -97,6 +94,7 @@ class Comment extends Model
 
     /**
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -108,6 +106,7 @@ class Comment extends Model
 
     /**
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

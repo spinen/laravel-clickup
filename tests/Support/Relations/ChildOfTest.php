@@ -2,10 +2,6 @@
 
 namespace Spinen\ClickUp\Support\Relations;
 
-use Mockery;
-use Spinen\ClickUp\Support\Builder;
-use Spinen\ClickUp\Support\Stubs\Model;
-
 class ChildOfTest extends RelationCase
 {
     /**

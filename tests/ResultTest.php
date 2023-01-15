@@ -7,8 +7,6 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 
 /**
  * Class ResultTest
- *
- * @package Spinen\ClickUp
  */
 class ResultTest extends ModelCase
 {

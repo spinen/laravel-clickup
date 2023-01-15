@@ -12,12 +12,11 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Interval
  *
- * @package Spinen\ClickUp
  *
  * @property Carbon $date_added
  * @property Carbon $end
  * @property Carbon $start
- * @property integer $time
+ * @property int $time
  * @property string $id
  * @property string $source
  * @property Task $task
@@ -31,15 +30,16 @@ class Interval extends Model
      */
     protected $casts = [
         'date_added' => 'datetime:Uv',
-        'end'        => 'datetime:Uv',
-        'id'         => 'string',
-        'start'      => 'datetime:Uv',
-        'time'       => 'integer',
+        'end' => 'datetime:Uv',
+        'id' => 'string',
+        'start' => 'datetime:Uv',
+        'time' => 'integer',
     ];
 
     // TODO: Figure out how to setup relation to task
     /**
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

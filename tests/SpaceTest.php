@@ -8,8 +8,6 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 
 /**
  * Class SpaceTest
- *
- * @package Spinen\ClickUp
  */
 class SpaceTest extends ModelCase
 {

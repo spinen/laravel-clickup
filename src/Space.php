@@ -13,19 +13,18 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 /**
  * Class Space
  *
- * @package Spinen\ClickUp
  *
  * @property array $features
- * @property boolean $archived
- * @property boolean $multiple_assignees
- * @property boolean $private
+ * @property bool $archived
+ * @property bool $multiple_assignees
+ * @property bool $private
  * @property Collection $folders
  * @property Collection $members
  * @property Collection $statuses
  * @property Collection $tags
  * @property Collection $taskLists
  * @property Collection $views
- * @property integer $id
+ * @property int $id
  * @property string $name
  * @property Team $team
  */
@@ -37,10 +36,10 @@ class Space extends Model
      * @var array
      */
     protected $casts = [
-        'archived'           => 'boolean',
-        'id'                 => 'integer',
+        'archived' => 'boolean',
+        'id' => 'integer',
         'multiple_assignees' => 'boolean',
-        'private'            => 'boolean',
+        'private' => 'boolean',
     ];
 
     /**
@@ -53,9 +52,7 @@ class Space extends Model
     /**
      * Accessor for Members.
      *
-     * @param array $members
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function getMembersAttribute(array $members): Collection
@@ -66,9 +63,7 @@ class Space extends Model
     /**
      * Accessor for Statuses.
      *
-     * @param array $statuses
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function getStatusesAttribute(array $statuses): Collection
@@ -77,8 +72,6 @@ class Space extends Model
     }
 
     /**
-     * @return HasMany
-
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -89,8 +82,6 @@ class Space extends Model
     }
 
     /**
-     * @return HasMany
-
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -101,8 +92,6 @@ class Space extends Model
     }
 
     /**
-     * @return HasMany
-
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -113,7 +102,6 @@ class Space extends Model
     }
 
     /**
-     * @return ChildOf
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -124,8 +112,6 @@ class Space extends Model
     }
 
     /**
-     * @return HasMany
-
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

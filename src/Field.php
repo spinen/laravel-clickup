@@ -12,10 +12,9 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Field
  *
- * @package Spinen\ClickUp
  *
  * @property array $type_config
- * @property boolean $hide_from_guests
+ * @property bool $hide_from_guests
  * @property Carbon $date_created
  * @property string $id
  * @property string $name
@@ -30,9 +29,9 @@ class Field extends Model
      * @var array
      */
     protected $casts = [
-        'date_created'    => 'datetime:Uv',
+        'date_created' => 'datetime:Uv',
         'hide_from_guest' => 'boolean',
-        'id'              => 'string',
+        'id' => 'string',
     ];
 
     /**
@@ -54,7 +53,6 @@ class Field extends Model
     protected $path = '/field';
 
     /**
-     * @return ChildOf
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

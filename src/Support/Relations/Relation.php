@@ -10,8 +10,6 @@ use Spinen\ClickUp\Support\Model;
 
 /**
  * Class Relation
- *
- * @package Spinen\ClickUp\Support\Relations
  */
 abstract class Relation
 {
@@ -43,10 +41,9 @@ abstract class Relation
     /**
      * Create a new relation instance.
      *
-     * @param Builder $builder
-     * @param Model $parent
      *
      * @return void
+     *
      * @throws InvalidRelationshipException
      */
     public function __construct(Builder $builder, Model $parent)
@@ -59,10 +56,8 @@ abstract class Relation
     /**
      * Handle dynamic method calls to the relationship.
      *
-     * @param string $method
-     * @param array $parameters
-     *
-     * @return mixed
+     * @param  string  $method
+     * @param  array  $parameters
      */
     public function __call($method, $parameters)
     {
@@ -81,8 +76,6 @@ abstract class Relation
 
     /**
      * Get the Builder instance
-     *
-     * @return Builder
      */
     public function getBuilder(): Builder
     {
@@ -91,8 +84,6 @@ abstract class Relation
 
     /**
      * Get the parent Model instance
-     *
-     * @return Model
      */
     public function getParent(): Model
     {
@@ -101,8 +92,6 @@ abstract class Relation
 
     /**
      * Get the related Model instance
-     *
-     * @return Model
      */
     public function getRelated(): Model
     {
@@ -111,8 +100,6 @@ abstract class Relation
 
     /**
      * Get the results of the relationship.
-     *
-     * @return mixed
      */
     abstract public function getResults();
 }

@@ -7,7 +7,6 @@ use Spinen\ClickUp\Support\Model;
 /**
  * Class TaskTemplate
  *
- * @package Spinen\ClickUp
  *
  * @property string $id
  * @property string $name

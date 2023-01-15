@@ -7,9 +7,8 @@ use Spinen\ClickUp\Support\Model;
 /**
  * Class Priority
  *
- * @package Spinen\ClickUp
  *
- * @property integer $id
+ * @property int $id
  * @property string $priority
  * @property string $color
  * @property float $orderindex
@@ -22,7 +21,7 @@ class Priority extends Model
      * @var array
      */
     protected $casts = [
-        'id'         => 'integer',
+        'id' => 'integer',
         'orderindex' => 'float',
     ];
 

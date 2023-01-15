@@ -19,7 +19,6 @@ use Spinen\ClickUp\User;
 /**
  * Class Builder
  *
- * @package Spinen\ClickUp\Support
  *
  * @property Collection $spaces
  * @property Collection $tasks
@@ -63,9 +62,9 @@ class Builder
      * @var array
      */
     protected $rootModels = [
-        'spaces'     => Space::class,
-        'tasks'      => Task::class,
-        'teams'      => Team::class,
+        'spaces' => Space::class,
+        'tasks' => Task::class,
+        'teams' => Team::class,
         'workspaces' => Team::class,
     ];
 
@@ -79,29 +78,27 @@ class Builder
     /**
      * Magic method to make builders for root models
      *
-     * @param string $name
-     * @param $arguments
+     * @param  string  $name
      *
-     * @return mixed
      * @throws BadMethodCallException
      * @throws ModelNotFoundException
      * @throws NoClientException
      */
     public function __call($name, $arguments)
     {
-        if (!$this->parentModel && array_key_exists($name, $this->rootModels)) {
+        if (! $this->parentModel && array_key_exists($name, $this->rootModels)) {
             return $this->newInstanceForModel($this->rootModels[$name]);
         }
 
-        throw new BadMethodCallException(sprintf("Call to undefined method [%s]", $name));
+        throw new BadMethodCallException(sprintf('Call to undefined method [%s]', $name));
     }
 
     /**
      * Magic method to make builders appears as properties
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return Collection|Model|null
+     *
      * @throws GuzzleException
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
@@ -117,7 +114,7 @@ class Builder
         }
 
         // Only return builders as properties, when not a child
-        if (!$this->parentModel && array_key_exists($name, $this->rootModels)) {
+        if (! $this->parentModel && array_key_exists($name, $this->rootModels)) {
             return $this->{$name}()
                         ->get();
         }
@@ -128,9 +125,7 @@ class Builder
     /**
      * Create instance of class and save via API
      *
-     * @param array $attributes
      *
-     * @return Model
      * @throws InvalidRelationshipException
      */
     public function create(array $attributes): Model
@@ -146,9 +141,9 @@ class Builder
     /**
      * Get Collection of class instances that match query
      *
-     * @param array|string $properties to pull
-     *
+     * @param  array|string  $properties to pull
      * @return Collection|Model
+     *
      * @throws GuzzleException
      * @throws InvalidRelationshipException
      * @throws NoClientException
@@ -168,16 +163,16 @@ class Builder
         // Convert to a collection of filtered objects casted to the class
         return (new Collection((array_values($response) === $response) ? $response : [$response]))->map(
             function ($items) use ($properties) {
-                    // Cast to class with only the requested, properties
-                    return $this->getModel()
-                                ->newFromBuilder(
-                                    $properties === ['*']
-                                        ? (array)$items
-                                        : collect($items)
-                                            ->only($properties)
-                                            ->toArray()
-                                )
-                                ->setClient($this->getClient());
+                // Cast to class with only the requested, properties
+                return $this->getModel()
+                            ->newFromBuilder(
+                                $properties === ['*']
+                                    ? (array) $items
+                                    : collect($items)
+                                        ->only($properties)
+                                        ->toArray()
+                            )
+                            ->setClient($this->getClient());
             }
         );
     }
@@ -185,29 +180,26 @@ class Builder
     /**
      * Get the model instance being queried.
      *
-     * @return Model
      * @throws InvalidRelationshipException
      */
     public function getModel(): Model
     {
-        if (!$this->class) {
+        if (! $this->class) {
             throw new InvalidRelationshipException();
         }
 
-        if (!$this->model) {
+        if (! $this->model) {
             $this->model = (new $this->class([], $this->parentModel))->setClient($this->client);
         }
 
         return $this->model;
     }
 
-
     /**
      * Get the path for the resource with the where filters
      *
-     * @param string|null $extra
+     * @param  string|null  $extra
      *
-     * @return string|null
      * @throws InvalidRelationshipException
      */
     public function getPath($extra = null): ?string
@@ -219,10 +211,9 @@ class Builder
     /**
      * Find specific instance of class
      *
-     * @param integer|string $id
-     * @param array|string $properties to pull
+     * @param  int|string  $id
+     * @param  array|string  $properties to pull
      *
-     * @return Model
      * @throws GuzzleException
      * @throws InvalidRelationshipException
      * @throws NoClientException
@@ -238,9 +229,8 @@ class Builder
     /**
      * New up a class instance, but not saved
      *
-     * @param array|null $attributes
+     * @param  array|null  $attributes
      *
-     * @return Model
      * @throws InvalidRelationshipException
      */
     public function make(array $attributes = []): Model
@@ -254,6 +244,7 @@ class Builder
      * Create new Builder instance
      *
      * @return $this
+     *
      * @throws ModelNotFoundException
      * @throws NoClientException
      */
@@ -267,9 +258,9 @@ class Builder
     /**
      * Create new Builder instance for a specific model
      *
-     * @param string $model
-     *
+     * @param  string  $model
      * @return $this
+     *
      * @throws ModelNotFoundException
      * @throws NoClientException
      */
@@ -282,9 +273,7 @@ class Builder
     /**
      * Peel of the wrapping property if it exist.
      *
-     * @param array $properties
      *
-     * @return array
      * @throws InvalidRelationshipException
      */
     protected function peelWrapperPropertyIfNeeded(array $properties): array
@@ -315,17 +304,17 @@ class Builder
     /**
      * Set the class to cast the response
      *
-     * @param string $class
-     *
+     * @param  string  $class
      * @return $this
+     *
      * @throws ModelNotFoundException
      */
     public function setClass($class): self
     {
         $this->class = $class;
 
-        if (!is_null($class) && !class_exists($this->class)) {
-            throw new ModelNotFoundException(sprintf("The model [%s] not found.", $this->class));
+        if (! is_null($class) && ! class_exists($this->class)) {
+            throw new ModelNotFoundException(sprintf('The model [%s] not found.', $this->class));
         }
 
         return $this;
@@ -334,8 +323,7 @@ class Builder
     /**
      * Set the parent model
      *
-     * @param Model $parent
-     *
+     * @param  Model  $parent
      * @return $this
      */
     public function setParent(?Model $parent): self
@@ -348,10 +336,9 @@ class Builder
     /**
      * Add property to filter the collection
      *
-     * @param string $property
-     * @param mixed $value
-     *
+     * @param  string  $property
      * @return $this
+     *
      * @throws InvalidRelationshipException
      */
     public function where($property, $value = true): self
@@ -373,9 +360,9 @@ class Builder
     /**
      * Shortcut to where property id
      *
-     * @param integer|string $id
-     *
+     * @param  int|string  $id
      * @return $this
+     *
      * @throws InvalidRelationshipException
      */
     public function whereId($id): self
@@ -386,9 +373,9 @@ class Builder
     /**
      * Shortcut to where property is false
      *
-     * @param string $property
-     *
+     * @param  string  $property
      * @return $this
+     *
      * @throws InvalidRelationshipException
      */
     public function whereNot($property): self

@@ -11,10 +11,9 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Member
  *
- * @package Spinen\ClickUp
  *
- * @property integer $id
- * @property integer $role
+ * @property int $id
+ * @property int $role
  * @property string $color
  * @property string $email
  * @property string $initials
@@ -31,7 +30,7 @@ class Member extends Model
      * @var array
      */
     protected $casts = [
-        'id'   => 'integer',
+        'id' => 'integer',
         'role' => 'integer',
     ];
 
@@ -44,6 +43,7 @@ class Member extends Model
 
     /**
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -55,6 +55,7 @@ class Member extends Model
 
     /**
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

@@ -2,7 +2,6 @@
 
 namespace Spinen\ClickUp\Support\Relations;
 
-use Mockery;
 use Spinen\ClickUp\Support\Collection;
 
 class HasManyTest extends RelationCase

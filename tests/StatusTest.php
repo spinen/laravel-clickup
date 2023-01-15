@@ -4,8 +4,6 @@ namespace Spinen\ClickUp;
 
 /**
  * Class StatusTest
- *
- * @package Spinen\ClickUp
  */
 class StatusTest extends ModelCase
 {

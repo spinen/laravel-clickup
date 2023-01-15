@@ -9,8 +9,6 @@ use Spinen\ClickUp\Exceptions\TokenException;
 
 /**
  * Class Client
- *
- * @package Spinen\ClickUp
  */
 class Client
 {
@@ -38,9 +36,7 @@ class Client
     /**
      * Client constructor.
      *
-     * @param array $configs
-     * @param Guzzle $guzzle
-     * @param string|null $token
+     * @param  string|null  $token
      */
     public function __construct(array $configs, Guzzle $guzzle, $token = null)
     {
@@ -52,9 +48,8 @@ class Client
     /**
      * Shortcut to 'DELETE' request
      *
-     * @param string $path
+     * @param  string  $path
      *
-     * @return array|null
      * @throws GuzzleException
      * @throws TokenException
      */
@@ -66,9 +61,8 @@ class Client
     /**
      * Shortcut to 'GET' request
      *
-     * @param string $path
+     * @param  string  $path
      *
-     * @return array|null
      * @throws GuzzleException
      * @throws TokenException
      */
@@ -80,18 +74,17 @@ class Client
     /**
      * Convert OAuth code to token for user
      *
-     * @param string $code
+     * @param  string  $code
      *
-     * @return string
      * @throws GuzzleException
      */
     public function oauthRequestTokenUsingCode($code): string
     {
-        $path = 'oauth/token?' . http_build_query(
+        $path = 'oauth/token?'.http_build_query(
             [
-                'client_id'     => $this->configs['oauth']['id'],
+                'client_id' => $this->configs['oauth']['id'],
                 'client_secret' => $this->configs['oauth']['secret'],
-                'code'          => $code,
+                'code' => $code,
             ]
         );
 
@@ -102,7 +95,7 @@ class Client
                     $this->uri($path),
                     [
                         'headers' => [
-                            'Content-Type'  => 'application/json',
+                            'Content-Type' => 'application/json',
                         ],
                     ]
                 )
@@ -121,16 +114,14 @@ class Client
     /**
      * Build the uri to redirect the user to start the OAuth process
      *
-     * @param string $url
-     *
-     * @return string
+     * @param  string  $url
      */
     public function oauthUri($url): string
     {
         return $this->uri(
-            '?' . http_build_query(
+            '?'.http_build_query(
                 [
-                    'client_id'    => $this->configs['oauth']['id'],
+                    'client_id' => $this->configs['oauth']['id'],
                     'redirect_uri' => $url,
                 ]
             ),
@@ -141,10 +132,8 @@ class Client
     /**
      * Shortcut to 'POST' request
      *
-     * @param string $path
-     * @param array $data
+     * @param  string  $path
      *
-     * @return array|null
      * @throws GuzzleException
      * @throws TokenException
      */
@@ -156,10 +145,8 @@ class Client
     /**
      * Shortcut to 'PUT' request
      *
-     * @param string $path
-     * @param array $data
+     * @param  string  $path
      *
-     * @return array|null
      * @throws GuzzleException
      * @throws TokenException
      */
@@ -171,17 +158,16 @@ class Client
     /**
      * Make an API call to ClickUp
      *
-     * @param string $path
-     * @param array|null $data
-     * @param string|null $method
+     * @param  string  $path
+     * @param  array|null  $data
+     * @param  string|null  $method
      *
-     * @return array|null
      * @throws GuzzleException
      * @throws TokenException
      */
     public function request($path, $data = [], $method = 'GET'): ?array
     {
-        if (!$this->token) {
+        if (! $this->token) {
             throw new TokenException('Must set token before making a request');
         }
 
@@ -193,9 +179,9 @@ class Client
                     [
                         'headers' => [
                             'Authorization' => $this->token,
-                            'Content-Type'  => 'application/json',
+                            'Content-Type' => 'application/json',
                         ],
-                        'body'    => empty($data) ? null : json_encode($data),
+                        'body' => empty($data) ? null : json_encode($data),
                     ]
                 )
                              ->getBody()
@@ -213,15 +199,14 @@ class Client
     /**
      * Set the configs
      *
-     * @param array $configs
      *
      * @return $this
      */
     public function setConfigs(array $configs): self
     {
         // Replace empty strings with nulls in config values
-        $this->configs = array_map(function($value) {
-            return $value === "" ? null : $value;
+        $this->configs = array_map(function ($value) {
+            return $value === '' ? null : $value;
         }, $configs);
 
         return $this;
@@ -230,8 +215,7 @@ class Client
     /**
      * Set the token
      *
-     * @param string $token
-     *
+     * @param  string  $token
      * @return $this
      */
     public function setToken($token): self
@@ -248,15 +232,13 @@ class Client
      * in the configs, but if a url is passed in as a second parameter then it is used.
      * If no url is found it will use the hard-coded v2 ClickUp API URL.
      *
-     * @param string|null $path
-     * @param string|null $url
-     *
-     * @return string
+     * @param  string|null  $path
+     * @param  string|null  $url
      */
     public function uri($path = null, $url = null): string
     {
         $url = $url ?? $this->configs['url'] ?? 'https://api.clickup.com/api/v2';
 
-        return rtrim($url, '/') . (Str::startsWith($path, '?') ? null : '/') . ltrim($path, '/');
+        return rtrim($url, '/').(Str::startsWith($path, '?') ? null : '/').ltrim($path, '/');
     }
 }

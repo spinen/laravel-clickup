@@ -12,7 +12,6 @@ use Spinen\ClickUp\Support\Builder;
 /**
  * Trait HasClickUp
  *
- * @package Spinen\ClickUp
  *
  * @property ClickUp $clickup
  * @property string $clickup_token
@@ -30,6 +29,7 @@ trait HasClickUp
      * Return cached version of the ClickUp Builder for the user
      *
      * @return Builder
+     *
      * @throws BindingResolutionException
      */
     public function clickup()
@@ -51,6 +51,7 @@ trait HasClickUp
      * Accessor for ClickUp Client.
      *
      * @return ClickUp
+     *
      * @throws BindingResolutionException
      * @throws NoClientException
      */
@@ -63,12 +64,13 @@ trait HasClickUp
     /**
      * Accessor for ClickUpToken.
      *
-     * @throws BindingResolutionException
      * @return string|null
+     *
+     * @throws BindingResolutionException
      */
     public function getClickupTokenAttribute()
     {
-        if (!is_null($this->attributes['clickup_token'])) {
+        if (! is_null($this->attributes['clickup_token'])) {
             return $this->resolveEncrypter()
                         ->decrypt($this->attributes['clickup_token']);
         }
@@ -92,6 +94,7 @@ trait HasClickUp
      * We are staying away from the Crypt facade, so that we can support PHP 7.4 with Laravel 5.x
      *
      * @return Encrypter
+     *
      * @throws BindingResolutionException
      */
     protected function resolveEncrypter()
@@ -103,13 +106,14 @@ trait HasClickUp
     /**
      * Mutator for ClickUpToken.
      *
-     * @param string $clickup_token
+     * @param  string  $clickup_token
+     *
      * @throws BindingResolutionException
      */
     public function setClickupTokenAttribute($clickup_token)
     {
         // If setting the password & already have a client, then empty the client to use new password in client
-        if (!is_null($this->builder)) {
+        if (! is_null($this->builder)) {
             $this->builder = null;
         }
 

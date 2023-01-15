@@ -33,7 +33,6 @@ class BelongsToTest extends RelationCase
                          )
                          ->andReturn(1);
 
-
         $this->relation = new BelongsTo($this->builder_mock, $this->model_mock, 'id');
     }
 
@@ -115,7 +114,6 @@ class BelongsToTest extends RelationCase
                        ]
                    )
                    ->andReturn(null);
-
 
         $this->relation = new BelongsTo($builder_mock, $model_mock, 'id');
 

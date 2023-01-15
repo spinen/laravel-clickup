@@ -9,8 +9,6 @@ use Spinen\ClickUp\Http\Middleware\Filter;
 
 /**
  * Class ServiceProvider
- *
- * @package Spinen\ClickUp\Providers
  */
 class ServiceProvider extends LaravelServiceProvider
 {
@@ -35,14 +33,13 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../../config/clickup.php', 'clickup');
+        $this->mergeConfigFrom(__DIR__.'/../../config/clickup.php', 'clickup');
     }
 
     /**
      * Register the middleware
      *
      * If a route needs to have the QuickBooks client, then make sure that the user has linked their account.
-     *
      */
     public function registerMiddleware()
     {
@@ -57,18 +54,18 @@ class ServiceProvider extends LaravelServiceProvider
     protected function registerPublishes()
     {
         if ($this->app->runningInConsole()) {
-            $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
             $this->publishes(
                 [
-                    __DIR__ . '/../../config/clickup.php' => config_path('clickup.php'),
+                    __DIR__.'/../../config/clickup.php' => config_path('clickup.php'),
                 ],
                 'clickup-config'
             );
 
             $this->publishes(
                 [
-                    __DIR__ . '/../../database/migrations' => database_path('migrations'),
+                    __DIR__.'/../../database/migrations' => database_path('migrations'),
                 ],
                 'clickup-migrations'
             );
@@ -83,11 +80,11 @@ class ServiceProvider extends LaravelServiceProvider
         if (Config::get('clickup.route.enabled')) {
             Route::group(
                 [
-                    'namespace'  => 'Spinen\ClickUp\Http\Controllers',
+                    'namespace' => 'Spinen\ClickUp\Http\Controllers',
                     'middleware' => Config::get('clickup.route.middleware', ['web']),
                 ],
                 function () {
-                    $this->loadRoutesFrom(realpath(__DIR__ . '/../../routes/web.php'));
+                    $this->loadRoutesFrom(realpath(__DIR__.'/../../routes/web.php'));
                 }
             );
         }

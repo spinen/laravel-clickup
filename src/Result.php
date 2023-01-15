@@ -13,18 +13,17 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Result
  *
- * @package Spinen\ClickUp
  *
  * @property array $last_action
- * @property boolean $completed
+ * @property bool $completed
  * @property Carbon $date_created
  * @property Collection $owners
  * @property Collection $subcategory_ids
  * @property Collection $task_ids
  * @property float $percent_completed
  * @property Goal $goal
- * @property integer $creator
- * @property integer $goal_pretty_id
+ * @property int $creator
+ * @property int $goal_pretty_id
  * @property string $goal_id
  * @property string $id
  * @property string $name
@@ -39,11 +38,11 @@ class Result extends Model
      * @var array
      */
     protected $casts = [
-        'completed'         => 'boolean',
-        'creator'           => 'integer',
-        'date_created'      => 'datetime:Uv',
-        'goal_pretty_id'    => 'integer',
-        'id'                => 'string',
+        'completed' => 'boolean',
+        'creator' => 'integer',
+        'date_created' => 'datetime:Uv',
+        'goal_pretty_id' => 'integer',
+        'id' => 'string',
         'percent_completed' => 'float',
     ];
 
@@ -68,9 +67,7 @@ class Result extends Model
     /**
      * Accessor for Owners.
      *
-     * @param array $owners
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function getOwnersAttribute(array $owners): Collection
@@ -79,7 +76,6 @@ class Result extends Model
     }
 
     /**
-     * @return ChildOf
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

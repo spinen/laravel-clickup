@@ -13,10 +13,9 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Checklist
  *
- * @package Spinen\ClickUp
  *
- * @property boolean $resolved
- * @property boolean $unresolved
+ * @property bool $resolved
+ * @property bool $unresolved
  * @property Carbon $date_created
  * @property Collection $items
  * @property float $orderindex
@@ -34,11 +33,11 @@ class Checklist extends Model
      */
     protected $casts = [
         'date_created' => 'datetime:Uv',
-        'id'           => 'string',
-        'orderindex'   => 'float',
-        'resolved'     => 'boolean',
-        'task_id'      => 'string',
-        'unresolved'   => 'boolean',
+        'id' => 'string',
+        'orderindex' => 'float',
+        'resolved' => 'boolean',
+        'task_id' => 'string',
+        'unresolved' => 'boolean',
     ];
 
     /**
@@ -51,9 +50,7 @@ class Checklist extends Model
     /**
      * Accessor for Items.
      *
-     * @param array $items
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function getItemsAttribute(array $items): Collection
@@ -62,7 +59,6 @@ class Checklist extends Model
     }
 
     /**
-     * @return ChildOf
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

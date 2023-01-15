@@ -13,7 +13,6 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 /**
  * Class View
  *
- * @package Spinen\ClickUp
  *
  * @property array $columns
  * @property array $divide
@@ -23,11 +22,11 @@ use Spinen\ClickUp\Support\Relations\HasMany;
  * @property array $settings
  * @property array $sorting
  * @property array $team_sidebar
- * @property boolean $protected
+ * @property bool $protected
  * @property Carbon $date_created
  * @property Carbon $date_protected
  * @property float $orderindex
- * @property integer $creator
+ * @property int $creator
  * @property Member $protected_by
  * @property string $id
  * @property string $name
@@ -43,11 +42,11 @@ class View extends Model
      * @var array
      */
     protected $casts = [
-        'date_created'   => 'datetime:Uv',
+        'date_created' => 'datetime:Uv',
         'date_protected' => 'integer',
-        'id'             => 'string',
-        'orderindex'     => 'float',
-        'protected'      => 'boolean',
+        'id' => 'string',
+        'orderindex' => 'float',
+        'protected' => 'boolean',
     ];
 
     /**
@@ -58,8 +57,6 @@ class View extends Model
     protected $path = '/view';
 
     /**
-     * @return HasMany
-
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -77,6 +74,7 @@ class View extends Model
 
     /**
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -89,9 +87,8 @@ class View extends Model
     /**
      * Accessor for ProtectedBy.
      *
-     * @param array $protected_by
+     * @param  array  $protected_by
      *
-     * @return Member
      * @throws NoClientException
      */
     public function getProtectedByAttribute($protected_by): Member
@@ -101,6 +98,7 @@ class View extends Model
 
     /**
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -112,6 +110,7 @@ class View extends Model
 
     /**
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -122,8 +121,6 @@ class View extends Model
     }
 
     /**
-     * @return HasMany
-
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -141,6 +138,7 @@ class View extends Model
 
     /**
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

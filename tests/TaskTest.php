@@ -9,8 +9,6 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 
 /**
  * Class TaskTest
- *
- * @package Spinen\ClickUp
  */
 class TaskTest extends ModelCase
 {

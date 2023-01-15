@@ -12,7 +12,6 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Share
  *
- * @package Spinen\ClickUp
  *
  * @property Collection $folders
  * @property Collection $lists
@@ -31,9 +30,7 @@ class Share extends Model
     /**
      * Accessor for Folders.
      *
-     * @param array $folders
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function getFoldersAttribute(array $folders): Collection
@@ -44,9 +41,7 @@ class Share extends Model
     /**
      * Accessor for Lists.
      *
-     * @param array $lists
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function getListsAttribute(array $lists): Collection
@@ -57,9 +52,7 @@ class Share extends Model
     /**
      * Accessor for Tasks.
      *
-     * @param array $tasks
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function getTasksAttribute(array $tasks): Collection
@@ -68,7 +61,6 @@ class Share extends Model
     }
 
     /**
-     * @return ChildOf
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

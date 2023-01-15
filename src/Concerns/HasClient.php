@@ -20,12 +20,11 @@ trait HasClient
      *
      * If there is no client assigned on the model, but it has a parent, then try to get the parent's client
      *
-     * @return Client
      * @throws NoClientException
      */
     public function getClient(): Client
     {
-        if (!$this->client && $this->parentModel) {
+        if (! $this->client && $this->parentModel) {
             $this->client = $this->parentModel->getClient();
         }
 
@@ -39,8 +38,7 @@ trait HasClient
     /**
      * Set the client instance
      *
-     * @param Client $client
-     *
+     * @param  Client  $client
      * @return $this
      */
     public function setClient(?Client $client): self

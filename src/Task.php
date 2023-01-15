@@ -2,10 +2,10 @@
 
 namespace Spinen\ClickUp;
 
+use Carbon\Carbon;
 use Spinen\ClickUp\Exceptions\InvalidRelationshipException;
 use Spinen\ClickUp\Exceptions\ModelNotFoundException;
 use Spinen\ClickUp\Exceptions\NoClientException;
-use Carbon\Carbon;
 use Spinen\ClickUp\Support\Collection;
 use Spinen\ClickUp\Support\Model;
 use Spinen\ClickUp\Support\Relations\BelongsTo;
@@ -15,9 +15,8 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 /**
  * Class Task
  *
- * @package Spinen\ClickUp
  *
- * @property boolean $archived
+ * @property bool $archived
  * @property array $attachments
  * @property array $dependencies
  * @property Carbon $date_closed
@@ -34,9 +33,9 @@ use Spinen\ClickUp\Support\Relations\HasMany;
  * @property Collection $times
  * @property float $orderindex
  * @property Folder $folder
- * @property integer $team_id
- * @property integer $time_estimate
- * @property integer $time_spent
+ * @property int $team_id
+ * @property int $time_estimate
+ * @property int $time_spent
  * @property Member $creator
  * @property Priority $priority
  * @property Project $project
@@ -58,17 +57,17 @@ class Task extends Model
      * @var array
      */
     protected $casts = [
-        'archived'      => 'boolean',
-        'date_closed'   => 'datetime:Uv',
-        'date_created'  => 'datetime:Uv',
-        'date_updated'  => 'datetime:Uv',
-        'due_date'      => 'datetime:Uv',
-        'id'            => 'string',
-        'orderindex'    => 'float',
-        'start_date'    => 'datetime:Uv',
-        'team_id'       => 'integer',
+        'archived' => 'boolean',
+        'date_closed' => 'datetime:Uv',
+        'date_created' => 'datetime:Uv',
+        'date_updated' => 'datetime:Uv',
+        'due_date' => 'datetime:Uv',
+        'id' => 'string',
+        'orderindex' => 'float',
+        'start_date' => 'datetime:Uv',
+        'team_id' => 'integer',
         'time_estimate' => 'integer',
-        'time_spent'    => 'integer',
+        'time_spent' => 'integer',
     ];
 
     /**
@@ -79,8 +78,6 @@ class Task extends Model
     protected $path = '/task';
 
     /**
-     * @return HasMany
-
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -93,9 +90,7 @@ class Task extends Model
     /**
      * Accessor for Assignees.
      *
-     * @param array $assignees
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function getAssigneesAttribute(array $assignees): Collection
@@ -106,9 +101,7 @@ class Task extends Model
     /**
      * Accessor for Checklists.
      *
-     * @param array $checklists
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function getChecklistsAttribute(array $checklists): Collection
@@ -119,9 +112,8 @@ class Task extends Model
     /**
      * Accessor for Creator.
      *
-     * @param array $creator
+     * @param  array  $creator
      *
-     * @return Member
      * @throws NoClientException
      */
     public function getCreatorAttribute($creator): Member
@@ -132,9 +124,7 @@ class Task extends Model
     /**
      * Accessor for CustomFields.
      *
-     * @param array $custom_fields
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function getCustomFieldsAttribute(array $custom_fields): Collection
@@ -145,9 +135,8 @@ class Task extends Model
     /**
      * Accessor for Folder.
      *
-     * @param array $folder
+     * @param  array  $folder
      *
-     * @return Folder
      * @throws NoClientException
      */
     public function getFolderAttribute($folder): Folder
@@ -158,7 +147,6 @@ class Task extends Model
     /**
      * Accessor for Parent.
      *
-     * @param string $parent
      *
      * @return Task
      */
@@ -171,9 +159,8 @@ class Task extends Model
     /**
      * Accessor for Priority.
      *
-     * @param array $priority
+     * @param  array  $priority
      *
-     * @return Priority
      * @throws NoClientException
      */
     public function getPriorityAttribute($priority): Priority
@@ -184,9 +171,8 @@ class Task extends Model
     /**
      * Accessor for Project.
      *
-     * @param array $project
+     * @param  array  $project
      *
-     * @return Project
      * @throws NoClientException
      */
     public function getProjectAttribute($project): Project
@@ -198,9 +184,8 @@ class Task extends Model
     /**
      * Accessor for Space.
      *
-     * @param array $space
+     * @param  array  $space
      *
-     * @return Space
      * @throws NoClientException
      */
     public function getSpaceAttribute($space): Space
@@ -212,9 +197,8 @@ class Task extends Model
     /**
      * Accessor for Status.
      *
-     * @param array $status
+     * @param  array  $status
      *
-     * @return Status
      * @throws NoClientException
      */
     public function getStatusAttribute($status): Status
@@ -225,9 +209,7 @@ class Task extends Model
     /**
      * Accessor for Tags.
      *
-     * @param array $tags
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function getTagsAttribute(array $tags): Collection
@@ -237,6 +219,7 @@ class Task extends Model
 
     /**
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -247,8 +230,6 @@ class Task extends Model
     }
 
     /**
-     * @return HasMany
-
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -260,6 +241,7 @@ class Task extends Model
 
     /**
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -270,8 +252,6 @@ class Task extends Model
     }
 
     /**
-     * @return HasMany
-
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -282,7 +262,6 @@ class Task extends Model
     }
 
     /**
-     * @return BelongsTo
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

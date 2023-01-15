@@ -17,8 +17,6 @@ use Spinen\ClickUp\View;
 
 /**
  * Class BuilderTest
- *
- * @package Spinen\ClickUp\Support
  */
 class BuilderTest extends TestCase
 {
@@ -38,13 +36,13 @@ class BuilderTest extends TestCase
     protected $team_response = [
         [
             'color' => '#000000',
-            'id'    => 1,
-            'name'  => 'Team 1',
+            'id' => 1,
+            'name' => 'Team 1',
         ],
         [
             'color' => '#ffffff',
-            'id'    => 2,
-            'name'  => 'Team 2',
+            'id' => 2,
+            'name' => 'Team 2',
         ],
     ];
 
@@ -66,6 +64,7 @@ class BuilderTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider rootModels
      */
     public function it_returns_builder_for_root_models($model)
@@ -82,13 +81,13 @@ class BuilderTest extends TestCase
     public function rootModels()
     {
         return [
-            'spaces'     => [
+            'spaces' => [
                 'model' => 'spaces',
             ],
-            'tasks'      => [
+            'tasks' => [
                 'model' => 'tasks',
             ],
-            'teams'      => [
+            'teams' => [
                 'model' => 'teams',
             ],
             'workspaces' => [
