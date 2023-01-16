@@ -12,7 +12,6 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Comment
  *
- *
  * @property array $comments
  * @property array $relations
  * @property bool $resolved
@@ -23,6 +22,9 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
  * @property Member $user
  * @property string $hist_id
  * @property string $text
+ * @property Task|null $task
+ * @property TasksList|null $list
+ * @property View|null $view
  */
 class Comment extends Model
 {
@@ -39,19 +41,15 @@ class Comment extends Model
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/comment';
+    protected string $path = '/comment';
 
     /**
      * Accessor for Assignee.
      *
-     * @param  array  $assignee
-     *
      * @throws NoClientException
      */
-    public function getAssigneeAttribute($assignee): Member
+    public function getAssigneeAttribute(?array $assignee): Member
     {
         return $this->givenOne(Member::class, $assignee);
     }
@@ -59,11 +57,9 @@ class Comment extends Model
     /**
      * Accessor for AssignedBy.
      *
-     * @param  array  $assigned_by
-     *
      * @throws NoClientException
      */
-    public function getAssignedByAttribute($assigned_by): Member
+    public function getAssignedByAttribute(?array $assigned_by): Member
     {
         return $this->givenOne(Member::class, $assigned_by);
     }
@@ -71,17 +67,15 @@ class Comment extends Model
     /**
      * Accessor for User.
      *
-     * @param  array  $user
-     *
      * @throws NoClientException
      */
-    public function getUserAttribute($user): Member
+    public function getUserAttribute(?array $user): Member
     {
         return $this->givenOne(Member::class, $user);
     }
 
     /**
-     * @return ChildOf
+     * Optional Child of TaskList
      *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
@@ -93,7 +87,7 @@ class Comment extends Model
     }
 
     /**
-     * @return ChildOf
+     * Child of Task
      *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
@@ -105,7 +99,7 @@ class Comment extends Model
     }
 
     /**
-     * @return ChildOf
+     * Child of View
      *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException

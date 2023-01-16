@@ -23,7 +23,7 @@ use Spinen\ClickUp\TestCase;
 /**
  * Class ModelTest
  */
-class ModelTestTest extends TestCase
+class ModelTest extends TestCase
 {
     /**
      * @var Mock

@@ -13,7 +13,6 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 /**
  * Class View
  *
- *
  * @property array $columns
  * @property array $divide
  * @property array $filters
@@ -25,14 +24,20 @@ use Spinen\ClickUp\Support\Relations\HasMany;
  * @property bool $protected
  * @property Carbon $date_created
  * @property Carbon $date_protected
+ * @property Collection $comments
+ * @property Collection $tasks
  * @property float $orderindex
+ * @property Folder|null $folder
  * @property int $creator
  * @property Member $protected_by
+ * @property Space|null $space
  * @property string $id
  * @property string $name
  * @property string $protected_note
  * @property string $type
  * @property string $visibility
+ * @property TaskList|null $list
+ * @property Team|null $team
  */
 class View extends Model
 {
@@ -51,12 +56,12 @@ class View extends Model
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/view';
+    protected string $path = '/view';
 
     /**
+     * Has many Comments
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -73,7 +78,7 @@ class View extends Model
     }
 
     /**
-     * @return ChildOf
+     * Optional Child of Folder
      *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
@@ -87,17 +92,15 @@ class View extends Model
     /**
      * Accessor for ProtectedBy.
      *
-     * @param  array  $protected_by
-     *
      * @throws NoClientException
      */
-    public function getProtectedByAttribute($protected_by): Member
+    public function getProtectedByAttribute(?array $protected_by): Member
     {
         return $this->givenOne(Member::class, $protected_by);
     }
 
     /**
-     * @return ChildOf
+     * Optional Child of TaskList
      *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
@@ -109,7 +112,7 @@ class View extends Model
     }
 
     /**
-     * @return ChildOf
+     * Optional Child of Space
      *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
@@ -121,6 +124,8 @@ class View extends Model
     }
 
     /**
+     * HasMany Tasks
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -137,7 +142,7 @@ class View extends Model
     }
 
     /**
-     * @return ChildOf
+     * Optional Child of Team
      *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException

@@ -14,41 +14,17 @@ use Spinen\ClickUp\Api\Client as ClickUp;
 class Filter
 {
     /**
-     * The ClickUp client instance.
-     *
-     * @var ClickUp
-     */
-    protected $clickup;
-
-    /**
-     * The redirector instance.
-     *
-     * @var Redirector
-     */
-    protected $redirector;
-
-    /**
-     * The UrlGenerator instance.
-     *
-     * @var UrlGenerator
-     */
-    protected $url_generator;
-
-    /**
      * Create a new ClickUp filter middleware instance.
      */
-    public function __construct(ClickUp $clickup, Redirector $redirector, UrlGenerator $url_generator)
-    {
-        $this->clickup = $clickup;
-        $this->redirector = $redirector;
-        $this->url_generator = $url_generator;
+    public function __construct(
+        protected ClickUp $clickup,
+        protected Redirector $redirector,
+        protected UrlGenerator $url_generator
+    ) {
     }
 
     /**
      * Handle an incoming request.
-     *
-     * @param  Request  $request Request
-     * @param  Closure  $next Closure
      */
     public function handle(Request $request, Closure $next)
     {
@@ -57,7 +33,7 @@ class Filter
             $this->redirector->setIntendedUrl($request->path());
 
             return $this->redirector->to(
-                $this->clickup->oauthUri($this->url_generator->route('clickup.sso.redirect_url', $request->user()))
+                $this->clickup->oauthUri((string) $this->url_generator->route('clickup.sso.redirect_url', $request->user()))
             );
         }
 

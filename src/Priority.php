@@ -7,7 +7,6 @@ use Spinen\ClickUp\Support\Model;
 /**
  * Class Priority
  *
- *
  * @property int $id
  * @property string $priority
  * @property string $color
@@ -27,8 +26,6 @@ class Priority extends Model
 
     /**
      * Is the model readonly?
-     *
-     * @var bool
      */
-    protected $readonlyModel = true;
+    protected bool $readonlyModel = true;
 }

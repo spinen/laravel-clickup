@@ -13,10 +13,8 @@ class Model extends BaseModel
 {
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = 'some/path';
+    protected string $path = 'some/path';
 
     /**
      * Mutator for Mutator.
@@ -38,11 +36,8 @@ class Model extends BaseModel
 
     /**
      * Allow swapping nested for test
-     *
-     *
-     * @return Model
      */
-    public function setNested($nested)
+    public function setNested($nested): Model
     {
         $this->nested = $nested;
 

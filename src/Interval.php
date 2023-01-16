@@ -12,7 +12,6 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Interval
  *
- *
  * @property Carbon $date_added
  * @property Carbon $end
  * @property Carbon $start
@@ -38,7 +37,7 @@ class Interval extends Model
 
     // TODO: Figure out how to setup relation to task
     /**
-     * @return ChildOf
+     * Child of Task
      *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException

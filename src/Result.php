@@ -13,7 +13,6 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Result
  *
- *
  * @property array $last_action
  * @property bool $completed
  * @property Carbon $date_created
@@ -52,30 +51,27 @@ class Result extends Model
      * Several of the endpoints are nested behind another model for relationship, but then to
      * interact with the specific model, then are not nested.  This property will know when to
      * keep the specific model nested.
-     *
-     * @var bool
      */
-    protected $nested = true;
+    protected bool $nested = true;
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/key_result';
+    protected string $path = '/key_result';
 
     /**
      * Accessor for Owners.
      *
-     *
      * @throws NoClientException
      */
-    public function getOwnersAttribute(array $owners): Collection
+    public function getOwnersAttribute(?array $owners): Collection
     {
         return $this->givenMany(Member::class, $owners);
     }
 
     /**
+     * Child of Goal
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

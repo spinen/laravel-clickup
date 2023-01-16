@@ -15,33 +15,18 @@ use Spinen\ClickUp\Support\Model;
 class BelongsTo extends Relation
 {
     /**
-     * The child model instance of the relation.
-     */
-    protected $child;
-
-    /**
-     * The foreign key of the parentModel model.
-     *
-     * @var string
-     */
-    protected $foreignKey;
-
-    /**
      * Create a new belongs to relationship instance.
      *
-     * @param  string  $foreignKey
      * @return void
      *
      * @throws InvalidRelationshipException
      */
-    public function __construct(Builder $builder, Model $child, $foreignKey)
+    public function __construct(protected Builder $builder, protected Model $child, protected $foreignKey)
     {
-        $this->foreignKey = $foreignKey;
-
-        // In the underlying base relationship class, this variable is referred to as
-        // the "parentModel" since most relationships are not inversed. But, since this
-        // one is we will create a "child" variable for much better readability.
-        $this->child = $child;
+        // In the underlying base relationship class, the "child" variable is
+        // referred to as the "parentModel" since most relationships are not
+        // inversed. But, since this one is we will create a "child" variable
+        // for much better readability.
 
         parent::__construct($builder->whereId($this->getForeignKey()), $this->getChild());
     }
@@ -56,10 +41,8 @@ class BelongsTo extends Relation
 
     /**
      * Get the foreign key's name
-     *
-     * @return int|string
      */
-    public function getForeignKey()
+    public function getForeignKey(): int|string|null
     {
         return $this->getChild()->{$this->getForeignKeyName()};
     }

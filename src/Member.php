@@ -11,7 +11,6 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Member
  *
- *
  * @property int $id
  * @property int $role
  * @property string $color
@@ -19,8 +18,8 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
  * @property string $initials
  * @property string $profilePicture
  * @property string $username
- * @property Task $task
- * @property TaskList $list
+ * @property Task|null $task
+ * @property TaskList|null $list
  */
 class Member extends Model
 {
@@ -36,13 +35,11 @@ class Member extends Model
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/member';
+    protected string $path = '/member';
 
     /**
-     * @return ChildOf
+     * Optional Child of TaskList
      *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
@@ -54,7 +51,7 @@ class Member extends Model
     }
 
     /**
-     * @return ChildOf
+     * Optional Child of Task
      *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException

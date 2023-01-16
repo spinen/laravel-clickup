@@ -13,12 +13,12 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 /**
  * Class Space
  *
- *
  * @property array $features
  * @property bool $archived
  * @property bool $multiple_assignees
  * @property bool $private
  * @property Collection $folders
+ * @property Collection $lists
  * @property Collection $members
  * @property Collection $statuses
  * @property Collection $tags
@@ -44,18 +44,15 @@ class Space extends Model
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/space';
+    protected string $path = '/space';
 
     /**
      * Accessor for Members.
      *
-     *
      * @throws NoClientException
      */
-    public function getMembersAttribute(array $members): Collection
+    public function getMembersAttribute(?array $members): Collection
     {
         return $this->givenMany(Member::class, $members, true);
     }
@@ -63,15 +60,16 @@ class Space extends Model
     /**
      * Accessor for Statuses.
      *
-     *
      * @throws NoClientException
      */
-    public function getStatusesAttribute(array $statuses): Collection
+    public function getStatusesAttribute(?array $statuses): Collection
     {
         return $this->givenMany(Status::class, $statuses);
     }
 
     /**
+     * Has many Folders
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -82,6 +80,8 @@ class Space extends Model
     }
 
     /**
+     * Has many TaskLists
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -92,6 +92,8 @@ class Space extends Model
     }
 
     /**
+     * Has many Tags
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -102,6 +104,8 @@ class Space extends Model
     }
 
     /**
+     * Child of Team
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -112,6 +116,8 @@ class Space extends Model
     }
 
     /**
+     * Has many Views
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

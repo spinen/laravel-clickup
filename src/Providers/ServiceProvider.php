@@ -83,9 +83,7 @@ class ServiceProvider extends LaravelServiceProvider
                     'namespace' => 'Spinen\ClickUp\Http\Controllers',
                     'middleware' => Config::get('clickup.route.middleware', ['web']),
                 ],
-                function () {
-                    $this->loadRoutesFrom(realpath(__DIR__.'/../../routes/web.php'));
-                }
+                fn () => $this->loadRoutesFrom(realpath(__DIR__.'/../../routes/web.php'))
             );
         }
     }

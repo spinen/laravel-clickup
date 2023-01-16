@@ -18,14 +18,12 @@ class ClickUpController extends Controller
     /**
      * Process the code returned for the user & save as clickup_token
      *
-     *
-     * @return RedirectResponse
-     *
      * @throws GuzzleException
      */
-    public function processCode(ClickUp $clickup, Redirector $redirector, Request $request, User $user)
+    public function processCode(ClickUp $clickup, Redirector $redirector, Request $request, User $user): RedirectResponse
     {
-        $user->clickup_token = $clickup->oauthRequestTokenUsingCode($request->get('code'));
+        // TODO: Deal with empty code
+        $user->clickup_token = $clickup->oauthRequestTokenUsingCode((string) $request->get('code'));
 
         $user->save();
 

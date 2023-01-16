@@ -14,7 +14,6 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Goal
  *
- *
  * @property array $history
  * @property array $key_results
  * @property array $reactions
@@ -72,34 +71,32 @@ class Goal extends Model
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/goal';
-
-    /**
-     * Accessor for Owners.
-     *
-     *
-     * @throws NoClientException
-     */
-    public function getOwnersAttribute(array $owners): Collection
-    {
-        return $this->givenMany(Member::class, $owners);
-    }
+    protected string $path = '/goal';
 
     /**
      * Accessor for Members.
      *
-     *
      * @throws NoClientException
      */
-    public function getMembersAttribute(array $members): Collection
+    public function getMembersAttribute(?array $members): Collection
     {
         return $this->givenMany(Member::class, $members, true);
     }
 
     /**
+     * Accessor for Owners.
+     *
+     * @throws NoClientException
+     */
+    public function getOwnersAttribute(?array $owners): Collection
+    {
+        return $this->givenMany(Member::class, $owners);
+    }
+
+    /**
+     * Belongs to Folder
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -110,6 +107,8 @@ class Goal extends Model
     }
 
     /**
+     * Child of Team
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

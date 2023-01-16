@@ -14,19 +14,26 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 /**
  * Class TaskList
  *
- *
  * @property bool $archived
  * @property bool $due_date_time
  * @property bool $override_statuses
  * @property bool $start_date_time
  * @property Carbon $due_date
  * @property Carbon $start_date
+ * @property Collection $comments
+ * @property Collection $fields
+ * @property Collection $members
  * @property Collection $statuses
+ * @property Collection $tasks
+ * @property Collection $taskTemplates
+ * @property Collection $views
  * @property float $orderindex
+ * @property Folder|null $folder
  * @property int $id
  * @property int $task_count
  * @property Member $assignee
  * @property Priority $priority
+ * @property Space|null $space
  * @property Status $status
  * @property string $content
  * @property string $name
@@ -52,26 +59,22 @@ class TaskList extends Model
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/list';
+    protected string $path = '/list';
 
     /**
      * Some of the responses have the collections under a property
-     *
-     * @var string|null
      */
-    protected $responseCollectionKey = 'lists';
+    protected ?string $responseCollectionKey = 'lists';
 
     /**
      * Some of the responses have the data under a property
-     *
-     * @var string|null
      */
-    protected $responseKey = 'list';
+    protected ?string $responseKey = 'list';
 
     /**
+     * Has many Comments
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -82,6 +85,8 @@ class TaskList extends Model
     }
 
     /**
+     * Has many Fields
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -92,7 +97,7 @@ class TaskList extends Model
     }
 
     /**
-     * @return ChildOf
+     * Optional Child of Folder
      *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
@@ -106,11 +111,9 @@ class TaskList extends Model
     /**
      * Accessor for Assignee.
      *
-     * @param  array  $assignee
-     *
      * @throws NoClientException
      */
-    public function getAssigneeAttribute($assignee): Member
+    public function getAssigneeAttribute(?array $assignee): Member
     {
         return $this->givenOne(Member::class, $assignee);
     }
@@ -118,11 +121,9 @@ class TaskList extends Model
     /**
      * Accessor for Priority.
      *
-     * @param  array  $priority
-     *
      * @throws NoClientException
      */
-    public function getPriorityAttribute($priority): Priority
+    public function getPriorityAttribute(?array $priority): Priority
     {
         return $this->givenOne(Priority::class, $priority);
     }
@@ -130,11 +131,9 @@ class TaskList extends Model
     /**
      * Accessor for Status.
      *
-     * @param  array  $status
-     *
      * @throws NoClientException
      */
-    public function getStatusAttribute($status): Status
+    public function getStatusAttribute(?array $status): Status
     {
         return $this->givenOne(Status::class, $status);
     }
@@ -142,15 +141,16 @@ class TaskList extends Model
     /**
      * Accessor for Statuses.
      *
-     *
      * @throws NoClientException
      */
-    public function getStatusesAttribute(array $statuses): Collection
+    public function getStatusesAttribute(?array $statuses): Collection
     {
         return $this->givenMany(Status::class, $statuses);
     }
 
     /**
+     * Has many Members
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -161,7 +161,7 @@ class TaskList extends Model
     }
 
     /**
-     * @return ChildOf
+     * Optional Child of Space
      *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
@@ -173,6 +173,8 @@ class TaskList extends Model
     }
 
     /**
+     * Has many Tasks
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -183,6 +185,8 @@ class TaskList extends Model
     }
 
     /**
+     * Has many TaskTemplates
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -193,6 +197,8 @@ class TaskList extends Model
     }
 
     /**
+     * Has many Views
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

@@ -12,14 +12,18 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Webhook
  *
- *
  * @property array $events
+ * @property Folder $folder
  * @property int $folder_id
  * @property int $list_id
  * @property int $space_id
  * @property int $team_id
  * @property int $userid
+ * @property Member $user
+ * @property Space #space
  * @property string $id
+ * @property TaskList $list
+ * @property Team $team
  */
 class Webhook extends Model
 {
@@ -39,12 +43,12 @@ class Webhook extends Model
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/webhook';
+    protected string $path = '/webhook';
 
     /**
+     * Belongs to Folder
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -55,6 +59,8 @@ class Webhook extends Model
     }
 
     /**
+     * Belongs to TaskList
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -65,6 +71,8 @@ class Webhook extends Model
     }
 
     /**
+     * Belongs to Space
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -75,6 +83,8 @@ class Webhook extends Model
     }
 
     /**
+     * Child of Team
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -85,6 +95,8 @@ class Webhook extends Model
     }
 
     /**
+     * Belongs to Member
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

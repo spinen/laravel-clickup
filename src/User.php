@@ -7,7 +7,6 @@ use Spinen\ClickUp\Support\Model;
 /**
  * Class User
  *
- *
  * @property bool $global_font_support
  * @property int $id
  * @property int $week_start_day
@@ -33,15 +32,11 @@ class User extends Model
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/user';
+    protected string $path = '/user';
 
     /**
      * Is the model readonly?
-     *
-     * @var bool
      */
-    protected $readonlyModel = true;
+    protected bool $readonlyModel = true;
 }

@@ -4,6 +4,7 @@ namespace Spinen\ClickUp\Support\Relations;
 
 use Mockery;
 use Spinen\ClickUp\Support\Builder;
+use Spinen\ClickUp\Support\Collection;
 use Spinen\ClickUp\Support\Stubs\Model;
 
 class BelongsToTest extends RelationCase
@@ -81,7 +82,7 @@ class BelongsToTest extends RelationCase
         $this->builder_mock->shouldReceive('get')
                            ->once()
                            ->withNoArgs()
-                           ->andReturn(collect($results));
+                           ->andReturn(Collection::make($results));
 
         $results = $this->relation->getResults();
 

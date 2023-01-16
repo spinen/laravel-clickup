@@ -7,7 +7,6 @@ use Spinen\ClickUp\Support\Model;
 /**
  * Class Status
  *
- *
  * @property string $status
  * @property string $color
  * @property float $orderindex
@@ -26,8 +25,6 @@ class Status extends Model
 
     /**
      * Is the model readonly?
-     *
-     * @var bool
      */
-    protected $readonlyModel = true;
+    protected bool $readonlyModel = true;
 }

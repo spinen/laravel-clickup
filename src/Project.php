@@ -7,7 +7,6 @@ use Spinen\ClickUp\Support\Model;
 /**
  * Class Project
  *
- *
  * @property int $id
  * @property string $name
  * @property bool $hidden
@@ -28,8 +27,6 @@ class Project extends Model
 
     /**
      * Is the model readonly?
-     *
-     * @var bool
      */
-    protected $readonlyModel = true;
+    protected bool $readonlyModel = true;
 }

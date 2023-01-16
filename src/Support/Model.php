@@ -39,24 +39,18 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Indicates if the model exists.
-     *
-     * @var bool
      */
-    public $exists = false;
+    public bool $exists = false;
 
     /**
      * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
      */
-    public $incrementing = false;
+    public bool $incrementing = false;
 
     /**
      * The "type" of the primary key ID.
-     *
-     * @var string
      */
-    protected $keyType = 'int';
+    protected string $keyType = 'int';
 
     /**
      * Is resource nested behind parentModel
@@ -64,66 +58,48 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      * Several of the endpoints are nested behind another model for relationship, but then to
      * interact with the specific model, then are not nested.  This property will know when to
      * keep the specific model nested.
-     *
-     * @var bool
      */
-    protected $nested = false;
+    protected bool $nested = false;
 
     /**
      * Optional parentModel instance
-     *
-     * @var Model
      */
-    public $parentModel;
+    public ?Model $parentModel;
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = null;
+    protected string $path;
 
     /**
      * The primary key for the model.
-     *
-     * @var string
      */
-    protected $primaryKey = 'id';
+    protected string $primaryKey = 'id';
 
     /**
      * Is the model readonly?
-     *
-     * @var bool
      */
-    protected $readonlyModel = false;
+    protected bool $readonlyModel = false;
 
     /**
      * The loaded relationships for the model.
-     *
-     * @var array
      */
-    protected $relations = [];
+    protected array $relations = [];
 
     /**
      * Some of the responses have the collections under a property
-     *
-     * @var string|null
      */
-    protected $responseCollectionKey = null;
+    protected ?string $responseCollectionKey = null;
 
     /**
      * Some of the responses have the data under a property
-     *
-     * @var string|null
      */
-    protected $responseKey = null;
+    protected ?string $responseKey = null;
 
     /**
      * Are timestamps in milliseconds?
-     *
-     * @var bool
      */
-    protected $timestampsInMilliseconds = true;
+    protected bool $timestampsInMilliseconds = true;
 
     /**
      * The name of the "created at" column.
@@ -141,10 +117,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Model constructor.
-     *
-     * @param  array|null  $attributes
      */
-    public function __construct(array $attributes = [], Model $parentModel = null)
+    public function __construct(?array $attributes = [], Model $parentModel = null)
     {
         // All dates from API comes as epoch with milliseconds
         $this->dateFormat = 'Uv';
@@ -159,21 +133,16 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Dynamically retrieve attributes on the model.
-     *
-     * @param  string  $key
      */
-    public function __get($key)
+    public function __get(string $key)
     {
         return $this->getAttribute($key);
     }
 
     /**
      * Determine if an attribute or relation exists on the model.
-     *
-     * @param  string  $key
-     * @return bool
      */
-    public function __isset($key)
+    public function __isset(string $key): bool
     {
         return $this->offsetExists($key);
     }
@@ -308,13 +277,10 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Fill the model with the supplied properties
-     *
-     *
-     * @return $this
      */
-    public function fill(array $attributes = []): self
+    public function fill(?array $attributes = []): self
     {
-        foreach ($attributes as $attribute => $value) {
+        foreach ((array) $attributes as $attribute => $value) {
             $this->setAttribute($attribute, $value);
         }
 
@@ -544,11 +510,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Determine if the given attribute exists.
-     *
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return ! is_null($this->getAttribute($offset));
     }

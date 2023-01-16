@@ -11,10 +11,10 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Tag
  *
- *
+ * @property Space $space
  * @property string $name
- * @property string $tag_fg
  * @property string $tag_bg
+ * @property string $tag_fg
  */
 class Tag extends Model
 {
@@ -24,19 +24,17 @@ class Tag extends Model
      * Several of the endpoints are nested behind another model for relationship, but then to
      * interact with the specific model, then are not nested.  This property will know when to
      * keep the specific model nested.
-     *
-     * @var bool
      */
-    protected $nested = true;
+    protected bool $nested = true;
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/tag';
+    protected string $path = '/tag';
 
     /**
+     * Child of Space
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

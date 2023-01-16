@@ -13,7 +13,6 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 /**
  * Class Folder
  *
- *
  * @property bool $archived
  * @property bool $hidden
  * @property bool $override_statuses
@@ -44,18 +43,15 @@ class Folder extends Model
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/folder';
+    protected string $path = '/folder';
 
     /**
      * Accessor for Statuses.
      *
-     *
      * @throws NoClientException
      */
-    public function getStatusesAttribute(array $statuses): Collection
+    public function getStatusesAttribute(?array $statuses): Collection
     {
         return $this->givenMany(Status::class, $statuses);
     }
@@ -63,15 +59,16 @@ class Folder extends Model
     /**
      * Accessor for Lists.
      *
-     *
      * @throws NoClientException
      */
-    public function getListsAttribute(array $lists): Collection
+    public function getListsAttribute(?array $lists): Collection
     {
         return $this->givenMany(TaskList::class, $lists);
     }
 
     /**
+     * Child of Space
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -82,6 +79,8 @@ class Folder extends Model
     }
 
     /**
+     * HasMany Views
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

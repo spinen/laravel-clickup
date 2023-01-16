@@ -13,7 +13,6 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Checklist
  *
- *
  * @property bool $resolved
  * @property bool $unresolved
  * @property Carbon $date_created
@@ -42,14 +41,11 @@ class Checklist extends Model
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/checklist';
+    protected string $path = '/checklist';
 
     /**
      * Accessor for Items.
-     *
      *
      * @throws NoClientException
      */
@@ -59,6 +55,8 @@ class Checklist extends Model
     }
 
     /**
+     * Child of Task
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

@@ -18,25 +18,9 @@ abstract class Relation
     }
 
     /**
-     * The Eloquent builder builder instance.
-     *
-     * @var Builder
-     */
-    protected $builder;
-
-    /**
-     * The parent model instance.
-     *
-     * @var Model
-     */
-    protected $parent;
-
-    /**
      * The related model instance.
-     *
-     * @var Model
      */
-    protected $related;
+    protected Model $related;
 
     /**
      * Create a new relation instance.
@@ -46,20 +30,15 @@ abstract class Relation
      *
      * @throws InvalidRelationshipException
      */
-    public function __construct(Builder $builder, Model $parent)
+    public function __construct(protected Builder $builder, protected Model $parent)
     {
-        $this->builder = $builder;
-        $this->parent = $parent;
         $this->related = $builder->getModel();
     }
 
     /**
      * Handle dynamic method calls to the relationship.
-     *
-     * @param  string  $method
-     * @param  array  $parameters
      */
-    public function __call($method, $parameters)
+    public function __call(string $method, array $parameters)
     {
         if (static::hasMacro($method)) {
             return $this->macroCall($method, $parameters);
