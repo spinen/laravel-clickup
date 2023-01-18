@@ -4,7 +4,6 @@ namespace Spinen\ClickUp\Concerns;
 
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Support\Facades\Crypt;
 use Spinen\ClickUp\Api\Client as ClickUp;
 use Spinen\ClickUp\Exceptions\NoClientException;
@@ -32,12 +31,12 @@ trait HasClickUp
     {
         if (is_null($this->builder)) {
             $this->builder = Container::getInstance()
-                                      ->make(Builder::class)
-                                      ->setClient(
-                                          Container::getInstance()
-                                                   ->make(ClickUp::class)
-                                                   ->setToken($this->clickup_token)
-                                      );
+                ->make(Builder::class)
+                ->setClient(
+                    Container::getInstance()
+                    ->make(ClickUp::class)
+                    ->setToken($this->clickup_token)
+                );
         }
 
         return $this->builder;
@@ -52,7 +51,7 @@ trait HasClickUp
     public function getClickupAttribute(): ClickUp
     {
         return $this->clickup()
-                    ->getClient();
+            ->getClient();
     }
 
     /**
