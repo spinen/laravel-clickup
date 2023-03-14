@@ -13,19 +13,15 @@ class Model extends BaseModel
 {
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = 'some/path';
+    protected string $path = 'some/path';
 
     /**
      * Mutator for Mutator.
-     *
-     * @param  $value
      */
     public function setMutatorAttribute($value)
     {
-        $this->attributes['mutator'] = 'mutated: ' . $value;
+        $this->attributes['mutator'] = 'mutated: '.$value;
     }
 
     public function setResponseCollectionKey($key)
@@ -40,12 +36,8 @@ class Model extends BaseModel
 
     /**
      * Allow swapping nested for test
-     *
-     * @param $nested
-     *
-     * @return Model
      */
-    public function setNested($nested)
+    public function setNested($nested): Model
     {
         $this->nested = $nested;
 
@@ -53,7 +45,6 @@ class Model extends BaseModel
     }
 
     /**
-     * @return HasMany
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

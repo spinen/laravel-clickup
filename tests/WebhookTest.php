@@ -6,8 +6,6 @@ use Spinen\ClickUp\Support\Relations\BelongsTo;
 
 /**
  * Class WebhookTest
- *
- * @package Spinen\ClickUp
  */
 class WebhookTest extends ModelCase
 {

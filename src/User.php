@@ -7,11 +7,9 @@ use Spinen\ClickUp\Support\Model;
 /**
  * Class User
  *
- * @package Spinen\ClickUp
- *
- * @property boolean $global_font_support
- * @property integer $id
- * @property integer $week_start_day
+ * @property bool $global_font_support
+ * @property int $id
+ * @property int $week_start_day
  * @property string $color
  * @property string $email
  * @property string $initials
@@ -28,21 +26,17 @@ class User extends Model
      */
     protected $casts = [
         'global_font_support' => 'boolean',
-        'id'                  => 'integer',
-        'week_start_day'      => 'integer',
+        'id' => 'integer',
+        'week_start_day' => 'integer',
     ];
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/user';
+    protected string $path = '/user';
 
     /**
      * Is the model readonly?
-     *
-     * @var bool
      */
-    protected $readonlyModel = true;
+    protected bool $readonlyModel = true;
 }

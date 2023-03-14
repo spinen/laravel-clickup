@@ -12,10 +12,8 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Time
  *
- * @package Spinen\ClickUp
- *
  * @property Collection $intervals
- * @property integer $time
+ * @property int $time
  * @property Member $user
  * @property Task $task
  */
@@ -32,27 +30,20 @@ class Time extends Model
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/time';
+    protected string $path = '/time';
 
     /**
      * Some of the responses have the data under a property
-     *
-     * @var string|null
      */
-    protected $responseKey = 'data';
+    protected ?string $responseKey = 'data';
 
     /**
      * Accessor for Intervals.
      *
-     * @param array $intervals
-     *
-     * @return Collection
      * @throws NoClientException
      */
-    public function getIntervalsAttribute(array $intervals): Collection
+    public function getIntervalsAttribute(?array $intervals): Collection
     {
         return $this->givenMany(Interval::class, $intervals);
     }
@@ -60,18 +51,16 @@ class Time extends Model
     /**
      * Accessor for User.
      *
-     * @param array $user
-     *
-     * @return Member
      * @throws NoClientException
      */
-    public function getUserAttribute($user): Member
+    public function getUserAttribute(?array $user): Member
     {
         return $this->givenOne(Member::class, $user);
     }
 
     /**
-     * @return ChildOf
+     * Child of Task
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

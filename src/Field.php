@@ -12,10 +12,8 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Field
  *
- * @package Spinen\ClickUp
- *
  * @property array $type_config
- * @property boolean $hide_from_guests
+ * @property bool $hide_from_guests
  * @property Carbon $date_created
  * @property string $id
  * @property string $name
@@ -30,9 +28,9 @@ class Field extends Model
      * @var array
      */
     protected $casts = [
-        'date_created'    => 'datetime:Uv',
+        'date_created' => 'datetime:Uv',
         'hide_from_guest' => 'boolean',
-        'id'              => 'string',
+        'id' => 'string',
     ];
 
     /**
@@ -41,20 +39,17 @@ class Field extends Model
      * Several of the endpoints are nested behind another model for relationship, but then to
      * interact with the specific model, then are not nested.  This property will know when to
      * keep the specific model nested.
-     *
-     * @var bool
      */
-    protected $nested = true;
+    protected bool $nested = true;
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/field';
+    protected string $path = '/field';
 
     /**
-     * @return ChildOf
+     * Child of TaskList
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

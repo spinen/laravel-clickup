@@ -13,7 +13,6 @@ use Spinen\ClickUp\TestCase;
 
 class HasClientTest extends TestCase
 {
-
     /**
      * @var Mock
      */

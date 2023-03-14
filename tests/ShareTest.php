@@ -7,8 +7,6 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 
 /**
  * Class ShareTest
- *
- * @package Spinen\ClickUp
  */
 class ShareTest extends ModelCase
 {

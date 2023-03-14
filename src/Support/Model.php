@@ -29,8 +29,6 @@ use Spinen\ClickUp\Support\Relations\Relation;
 
 /**
  * Class Model
- *
- * @package Spinen\ClickUp\Support
  */
 abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializable
 {
@@ -41,24 +39,18 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Indicates if the model exists.
-     *
-     * @var bool
      */
-    public $exists = false;
+    public bool $exists = false;
 
     /**
      * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
      */
-    public $incrementing = false;
+    public bool $incrementing = false;
 
     /**
      * The "type" of the primary key ID.
-     *
-     * @var string
      */
-    protected $keyType = 'int';
+    protected string $keyType = 'int';
 
     /**
      * Is resource nested behind parentModel
@@ -66,66 +58,48 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      * Several of the endpoints are nested behind another model for relationship, but then to
      * interact with the specific model, then are not nested.  This property will know when to
      * keep the specific model nested.
-     *
-     * @var bool
      */
-    protected $nested = false;
+    protected bool $nested = false;
 
     /**
      * Optional parentModel instance
-     *
-     * @var Model $parentModel
      */
-    public $parentModel;
+    public ?Model $parentModel;
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = null;
+    protected string $path;
 
     /**
      * The primary key for the model.
-     *
-     * @var string
      */
-    protected $primaryKey = 'id';
+    protected string $primaryKey = 'id';
 
     /**
      * Is the model readonly?
-     *
-     * @var bool
      */
-    protected $readonlyModel = false;
+    protected bool $readonlyModel = false;
 
     /**
      * The loaded relationships for the model.
-     *
-     * @var array
      */
-    protected $relations = [];
+    protected array $relations = [];
 
     /**
      * Some of the responses have the collections under a property
-     *
-     * @var string|null
      */
-    protected $responseCollectionKey = null;
+    protected ?string $responseCollectionKey = null;
 
     /**
      * Some of the responses have the data under a property
-     *
-     * @var string|null
      */
-    protected $responseKey = null;
+    protected ?string $responseKey = null;
 
     /**
      * Are timestamps in milliseconds?
-     *
-     * @var boolean
      */
-    protected $timestampsInMilliseconds = true;
+    protected bool $timestampsInMilliseconds = true;
 
     /**
      * The name of the "created at" column.
@@ -143,11 +117,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Model constructor.
-     *
-     * @param array|null $attributes
-     * @param Model|null $parentModel
      */
-    public function __construct(array $attributes = [], Model $parentModel = null)
+    public function __construct(?array $attributes = [], Model $parentModel = null)
     {
         // All dates from API comes as epoch with milliseconds
         $this->dateFormat = 'Uv';
@@ -162,24 +133,16 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Dynamically retrieve attributes on the model.
-     *
-     * @param string $key
-     *
-     * @return mixed
      */
-    public function __get($key)
+    public function __get(string $key)
     {
         return $this->getAttribute($key);
     }
 
     /**
      * Determine if an attribute or relation exists on the model.
-     *
-     * @param string $key
-     *
-     * @return bool
      */
-    public function __isset($key)
+    public function __isset(string $key): bool
     {
         return $this->offsetExists($key);
     }
@@ -187,10 +150,9 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Dynamically set attributes on the model.
      *
-     * @param string $key
-     * @param mixed $value
-     *
+     * @param  string  $key
      * @return void
+     *
      * @throws ModelReadonlyException
      */
     public function __set($key, $value)
@@ -215,8 +177,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Unset an attribute on the model.
      *
-     * @param string $key
-     *
+     * @param  string  $key
      * @return void
      */
     public function __unset($key)
@@ -227,7 +188,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Return a timestamp as DateTime object.
      *
-     * @param  mixed  $value
      * @return Carbon
      */
     protected function asDateTime($value)
@@ -242,22 +202,19 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Assume foreign key
      *
-     * @param string $related
-     *
-     * @return string
+     * @param  string  $related
      */
     protected function assumeForeignKey($related): string
     {
-        return Str::snake((new $related())->getResponseKey()) . '_id';
+        return Str::snake((new $related())->getResponseKey()).'_id';
     }
 
     /**
      * Relationship that makes the model belongs to another model
      *
-     * @param string $related
-     * @param string|null $foreignKey
+     * @param  string  $related
+     * @param  string|null  $foreignKey
      *
-     * @return BelongsTo
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -275,10 +232,9 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Relationship that makes the model child to another model
      *
-     * @param string $related
-     * @param string|null $foreignKey
+     * @param  string  $related
+     * @param  string|null  $foreignKey
      *
-     * @return ChildOf
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -297,7 +253,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Delete the model from ClickUp
      *
-     * @return boolean
      * @throws NoClientException
      * @throws TokenException
      */
@@ -322,14 +277,10 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Fill the model with the supplied properties
-     *
-     * @param array $attributes
-     *
-     * @return $this
      */
-    public function fill(array $attributes = []): self
+    public function fill(?array $attributes = []): self
     {
-        foreach ($attributes as $attribute => $value) {
+        foreach ((array) $attributes as $attribute => $value) {
             $this->setAttribute($attribute, $value);
         }
 
@@ -338,8 +289,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Get the value indicating whether the IDs are incrementing.
-     *
-     * @return bool
      */
     public function getIncrementing(): bool
     {
@@ -348,8 +297,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Get the value of the model's primary key.
-     *
-     * @return mixed
      */
     public function getKey()
     {
@@ -358,8 +305,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Get the primary key for the model.
-     *
-     * @return string
      */
     public function getKeyName(): string
     {
@@ -368,8 +313,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Get the auto-incrementing key type.
-     *
-     * @return string
      */
     public function getKeyType(): string
     {
@@ -381,9 +324,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      *
      * Put anything on the end of the URI that is passed in
      *
-     * @param string|null $extra
-     * @param array|null $query
-     *
+     * @param  string|null  $extra
+     * @param  array|null  $query
      * @return string
      */
     public function getPath($extra = null, array $query = []): ?string
@@ -393,21 +335,21 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
         // If have an id, then put it on the end
         if ($this->getKey()) {
-            $path .= '/' . $this->getKey();
+            $path .= '/'.$this->getKey();
         }
 
         // Stick any extra things on the end
-        if (!is_null($extra)) {
-            $path .= '/' . ltrim($extra, '/');
+        if (! is_null($extra)) {
+            $path .= '/'.ltrim($extra, '/');
         }
 
         // Convert query to querystring format and put on the end
-        if (!empty($query)) {
-            $path .= '?' . http_build_query($query);
+        if (! empty($query)) {
+            $path .= '?'.http_build_query($query);
         }
 
         // If there is a parentModel & not have an id (unless for nested), then prepend parentModel
-        if (!is_null($this->parentModel) && (!$this->getKey() || $this->isNested())) {
+        if (! is_null($this->parentModel) && (! $this->getKey() || $this->isNested())) {
             return $this->parentModel->getPath($path);
         }
 
@@ -417,9 +359,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Get a relationship value from a method.
      *
-     * @param string $method
-     *
-     * @return mixed
+     * @param  string  $method
      *
      * @throws LogicException
      */
@@ -427,7 +367,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     {
         $relation = $this->{$method}();
 
-        if (!$relation instanceof Relation) {
+        if (! $relation instanceof Relation) {
             $exception_message = is_null($relation)
                 ? '%s::%s must return a relationship instance, but "null" was returned. Was the "return" keyword used?'
                 : '%s::%s must return a relationship instance.';
@@ -449,8 +389,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      * Name of the wrapping key when response is a collection
      *
      * If none provided, assume plural version responseKey
-     *
-     * @return string|null
      */
     public function getResponseCollectionKey(): ?string
     {
@@ -461,8 +399,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      * Name of the wrapping key of response
      *
      * If none provided, assume camelCase of class name
-     *
-     * @return string|null
      */
     public function getResponseKey(): ?string
     {
@@ -472,11 +408,10 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Many of the results include collection of related data, so cast it
      *
-     * @param string $related
-     * @param array $given
-     * @param bool $reset Some of the values are nested under a property, so peel it off
+     * @param  string  $related
+     * @param  array  $given
+     * @param  bool  $reset Some of the values are nested under a property, so peel it off
      *
-     * @return Collection
      * @throws NoClientException
      */
     public function givenMany($related, $given, $reset = false): Collection
@@ -494,11 +429,10 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Many of the results include related data, so cast it to object
      *
-     * @param string $related
-     * @param array $attributes
-     * @param bool $reset Some of the values are nested under a property, so peel it off
+     * @param  string  $related
+     * @param  array  $attributes
+     * @param  bool  $reset Some of the values are nested under a property, so peel it off
      *
-     * @return Model
      * @throws NoClientException
      */
     public function givenOne($related, $attributes, $reset = false): Model
@@ -510,9 +444,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Relationship that makes the model have a collection of another model
      *
-     * @param string $related
+     * @param  string  $related
      *
-     * @return HasMany
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -528,8 +461,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Is endpoint nested behind another endpoint
-     *
-     * @return bool
      */
     public function isNested(): bool
     {
@@ -538,8 +469,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Convert the object into something JSON serializable.
-     *
-     * @return array
      */
     public function jsonSerialize(): array
     {
@@ -549,15 +478,14 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Create a new model instance that is existing.
      *
-     * @param array $attributes
-     *
+     * @param  array  $attributes
      * @return static
      */
     public function newFromBuilder($attributes = []): self
     {
         $model = $this->newInstance([], true);
 
-        $model->setRawAttributes((array)$attributes, true);
+        $model->setRawAttributes((array) $attributes, true);
 
         return $model;
     }
@@ -568,9 +496,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      * Provides a convenient way for us to generate fresh model instances of this current model.
      * It is particularly useful during the hydration of new objects via the builder.
      *
-     * @param array $attributes
-     * @param bool $exists
-     *
+     * @param  bool  $exists
      * @return static
      */
     public function newInstance(array $attributes = [], $exists = false): self
@@ -584,24 +510,16 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Determine if the given attribute exists.
-     *
-     * @param mixed $offset
-     *
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
-        return !is_null($this->getAttribute($offset));
+        return ! is_null($this->getAttribute($offset));
     }
 
     /**
      * Get the value for a given offset.
-     *
-     * @param mixed $offset
-     *
-     * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->getAttribute($offset);
     }
@@ -609,10 +527,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Set the value for a given offset.
      *
-     * @param mixed $offset
-     * @param mixed $value
      *
-     * @return void
      * @throws ModelReadonlyException
      */
     public function offsetSet($offset, $value): void
@@ -626,10 +541,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Unset the value for a given offset.
-     *
-     * @param mixed $offset
-     *
-     * @return void
      */
     public function offsetUnset($offset): void
     {
@@ -639,9 +550,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Determine if the given relation is loaded.
      *
-     * @param string $key
-     *
-     * @return bool
+     * @param  string  $key
      */
     public function relationLoaded($key): bool
     {
@@ -649,9 +558,20 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     }
 
     /**
+     * Laravel allows the resolver to be set at runtime, so we just return null
+     *
+     * @param  string  $class
+     * @param  string  $key
+     * @return null
+     */
+    public function relationResolver($class, $key)
+    {
+        return null;
+    }
+
+    /**
      * Save the model in ClickUp
      *
-     * @return bool
      * @throws NoClientException
      * @throws TokenException
      */
@@ -663,7 +583,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
         }
 
         try {
-            if (!$this->isDirty()) {
+            if (! $this->isDirty()) {
                 return true;
             }
 
@@ -690,7 +610,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
             $this->setRawAttributes($response, true);
 
             return true;
-
         } catch (GuzzleException $e) {
             // TODO: Do something with the error
 
@@ -701,26 +620,23 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Save the model in ClickUp, but raise error if fail
      *
-     * @return bool
      * @throws NoClientException
      * @throws TokenException
      * @throws UnableToSaveException
      */
     public function saveOrFail(): bool
     {
-        if (!$this->save()) {
+        if (! $this->save()) {
             throw new UnableToSaveException();
         }
 
         return true;
     }
 
-
     /**
      * Set the readonly
      *
-     * @param bool $readonly
-     *
+     * @param  bool  $readonly
      * @return $this
      */
     public function setReadonly($readonly = true): self
@@ -733,9 +649,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Set the given relationship on the model.
      *
-     * @param string $relation
-     * @param mixed $value
-     *
+     * @param  string  $relation
      * @return $this
      */
     public function setRelation($relation, $value): self
@@ -747,8 +661,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Convert the model instance to an array.
-     *
-     * @return array
      */
     public function toArray(): array
     {
@@ -758,9 +670,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Convert the model instance to JSON.
      *
-     * @param int $options
-     *
-     * @return string
+     * @param  int  $options
      *
      * @throws JsonEncodingException
      */

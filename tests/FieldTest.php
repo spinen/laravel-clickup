@@ -6,8 +6,6 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 
 /**
  * Class FieldTest
- *
- * @package Spinen\ClickUp
  */
 class FieldTest extends ModelCase
 {

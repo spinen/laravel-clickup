@@ -4,8 +4,6 @@ namespace Spinen\ClickUp;
 
 /**
  * Class TaskTemplateTest
- *
- * @package Spinen\ClickUp
  */
 class TaskTemplateTest extends ModelCase
 {

@@ -13,17 +13,15 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 /**
  * Class Folder
  *
- * @package Spinen\ClickUp
- *
- * @property boolean $archived
- * @property boolean $hidden
- * @property boolean $override_statuses
+ * @property bool $archived
+ * @property bool $hidden
+ * @property bool $override_statuses
  * @property Collection $lists
  * @property Collection $statuses
  * @property Collection $views
  * @property float $orderindex
- * @property integer $id
- * @property integer $task_count
+ * @property int $id
+ * @property int $task_count
  * @property Space $space
  * @property string $name
  */
@@ -35,30 +33,25 @@ class Folder extends Model
      * @var array
      */
     protected $casts = [
-        'archived'          => 'boolean',
-        'hidden'            => 'boolean',
-        'id'                => 'integer',
-        'orderindex'        => 'float',
+        'archived' => 'boolean',
+        'hidden' => 'boolean',
+        'id' => 'integer',
+        'orderindex' => 'float',
         'override_statuses' => 'boolean',
-        'task_count'        => 'integer',
+        'task_count' => 'integer',
     ];
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/folder';
+    protected string $path = '/folder';
 
     /**
      * Accessor for Statuses.
      *
-     * @param array $statuses
-     *
-     * @return Collection
      * @throws NoClientException
      */
-    public function getStatusesAttribute(array $statuses): Collection
+    public function getStatusesAttribute(?array $statuses): Collection
     {
         return $this->givenMany(Status::class, $statuses);
     }
@@ -66,18 +59,16 @@ class Folder extends Model
     /**
      * Accessor for Lists.
      *
-     * @param array $lists
-     *
-     * @return Collection
      * @throws NoClientException
      */
-    public function getListsAttribute(array $lists): Collection
+    public function getListsAttribute(?array $lists): Collection
     {
         return $this->givenMany(TaskList::class, $lists);
     }
 
     /**
-     * @return ChildOf
+     * Child of Space
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -88,8 +79,8 @@ class Folder extends Model
     }
 
     /**
-     * @return HasMany
-
+     * HasMany Views
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

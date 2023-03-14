@@ -14,8 +14,6 @@ use Spinen\ClickUp\Support\Builder;
  * Class ClientServiceProvider
  *
  * Since this is deferred, it only needed to deal with code that has to do with the client.
- *
- * @package Spinen\ClickUp\Providers
  */
 class ClientServiceProvider extends LaravelServiceProvider implements DeferrableProvider
 {
@@ -63,16 +61,12 @@ class ClientServiceProvider extends LaravelServiceProvider implements Deferrable
     {
         $this->app->bind(
             Builder::class,
-            function (Application $app) {
-                return new Builder($app->make(ClickUp::class));
-            }
+            fn (Application $app): Builder => new Builder($app->make(ClickUp::class))
         );
 
         $this->app->bind(
             ClickUp::class,
-            function (Application $app) {
-                return new ClickUp(Config::get('clickup'), $app->make(Guzzle::class));
-            }
+            fn (Application $app): ClickUp => new ClickUp(Config::get('clickup'), $app->make(Guzzle::class))
         );
     }
 }

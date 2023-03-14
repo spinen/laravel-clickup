@@ -7,8 +7,6 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 
 /**
  * Class TimeTest
- *
- * @package Spinen\ClickUp
  */
 class TimeTest extends ModelCase
 {

@@ -13,18 +13,16 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Result
  *
- * @package Spinen\ClickUp
- *
  * @property array $last_action
- * @property boolean $completed
+ * @property bool $completed
  * @property Carbon $date_created
  * @property Collection $owners
  * @property Collection $subcategory_ids
  * @property Collection $task_ids
  * @property float $percent_completed
  * @property Goal $goal
- * @property integer $creator
- * @property integer $goal_pretty_id
+ * @property int $creator
+ * @property int $goal_pretty_id
  * @property string $goal_id
  * @property string $id
  * @property string $name
@@ -39,11 +37,11 @@ class Result extends Model
      * @var array
      */
     protected $casts = [
-        'completed'         => 'boolean',
-        'creator'           => 'integer',
-        'date_created'      => 'datetime:Uv',
-        'goal_pretty_id'    => 'integer',
-        'id'                => 'string',
+        'completed' => 'boolean',
+        'creator' => 'integer',
+        'date_created' => 'datetime:Uv',
+        'goal_pretty_id' => 'integer',
+        'id' => 'string',
         'percent_completed' => 'float',
     ];
 
@@ -53,33 +51,27 @@ class Result extends Model
      * Several of the endpoints are nested behind another model for relationship, but then to
      * interact with the specific model, then are not nested.  This property will know when to
      * keep the specific model nested.
-     *
-     * @var bool
      */
-    protected $nested = true;
+    protected bool $nested = true;
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/key_result';
+    protected string $path = '/key_result';
 
     /**
      * Accessor for Owners.
      *
-     * @param array $owners
-     *
-     * @return Collection
      * @throws NoClientException
      */
-    public function getOwnersAttribute(array $owners): Collection
+    public function getOwnersAttribute(?array $owners): Collection
     {
         return $this->givenMany(Member::class, $owners);
     }
 
     /**
-     * @return ChildOf
+     * Child of Goal
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
