@@ -10,10 +10,8 @@ use Spinen\ClickUp\Support\Model;
 /**
  * Class Item
  *
- * @package Spinen\ClickUp
- *
- * @property boolean $resolved
- * @property boolean $unresolved
+ * @property bool $resolved
+ * @property bool $unresolved
  * @property Carbon $date_created
  * @property Collection $children
  * @property float $orderindex
@@ -31,10 +29,10 @@ class Item extends Model
      */
     protected $casts = [
         'date_created' => 'datetime:Uv',
-        'id'           => 'string',
-        'orderindex'   => 'float',
-        'resolved'     => 'boolean',
-        'unresolved'   => 'boolean',
+        'id' => 'string',
+        'orderindex' => 'float',
+        'resolved' => 'boolean',
+        'unresolved' => 'boolean',
     ];
 
     /**
@@ -43,27 +41,20 @@ class Item extends Model
      * Several of the endpoints are nested behind another model for relationship, but then to
      * interact with the specific model, then are not nested.  This property will know when to
      * keep the specific model nested.
-     *
-     * @var bool
      */
-    protected $nested = true;
+    protected bool $nested = true;
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/checklist_item';
+    protected string $path = '/checklist_item';
 
     /**
      * Accessor for Assignee.
      *
-     * @param array $assignee
-     *
-     * @return Member
      * @throws NoClientException
      */
-    public function getAssigneeAttribute($assignee): Member
+    public function getAssigneeAttribute(?array $assignee): Member
     {
         return $this->givenOne(Member::class, $assignee);
     }
@@ -71,25 +62,18 @@ class Item extends Model
     /**
      * Accessor for Children.
      *
-     * @param array $children
-     *
-     * @return Collection
      * @throws NoClientException
      */
-    public function getChildrenAttribute(array $children): Collection
+    public function getChildrenAttribute(?array $children): Collection
     {
         return $this->givenMany(Item::class, $children);
     }
 
     /**
      * Accessor for Parent.
-     *
-     * @param string $parent
-     *
-     * @return Item
      */
     // TODO: Figure out how to make this relationship work
-    /*public function getParentAttribute($parent): Item
+    /*public function getParentAttribute(string $parent): Item
     {
         return $this->parentModel;
     }*/

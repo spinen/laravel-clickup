@@ -2,10 +2,10 @@
 
 namespace Spinen\ClickUp;
 
+use Carbon\Carbon;
 use Spinen\ClickUp\Exceptions\InvalidRelationshipException;
 use Spinen\ClickUp\Exceptions\ModelNotFoundException;
 use Spinen\ClickUp\Exceptions\NoClientException;
-use Carbon\Carbon;
 use Spinen\ClickUp\Support\Collection;
 use Spinen\ClickUp\Support\Model;
 use Spinen\ClickUp\Support\Relations\BelongsTo;
@@ -15,9 +15,7 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 /**
  * Class Task
  *
- * @package Spinen\ClickUp
- *
- * @property boolean $archived
+ * @property bool $archived
  * @property array $attachments
  * @property array $dependencies
  * @property Carbon $date_closed
@@ -34,9 +32,9 @@ use Spinen\ClickUp\Support\Relations\HasMany;
  * @property Collection $times
  * @property float $orderindex
  * @property Folder $folder
- * @property integer $team_id
- * @property integer $time_estimate
- * @property integer $time_spent
+ * @property int $team_id
+ * @property int $time_estimate
+ * @property int $time_spent
  * @property Member $creator
  * @property Priority $priority
  * @property Project $project
@@ -46,8 +44,8 @@ use Spinen\ClickUp\Support\Relations\HasMany;
  * @property string $name
  * @property string $url
  * @property Task $parent
- * @property TaskList $list
- * @property Team $team
+ * @property TaskList|null $list
+ * @property Team|null $team
  * @property View $view
  */
 class Task extends Model
@@ -58,29 +56,27 @@ class Task extends Model
      * @var array
      */
     protected $casts = [
-        'archived'      => 'boolean',
-        'date_closed'   => 'datetime:Uv',
-        'date_created'  => 'datetime:Uv',
-        'date_updated'  => 'datetime:Uv',
-        'due_date'      => 'datetime:Uv',
-        'id'            => 'string',
-        'orderindex'    => 'float',
-        'start_date'    => 'datetime:Uv',
-        'team_id'       => 'integer',
+        'archived' => 'boolean',
+        'date_closed' => 'datetime:Uv',
+        'date_created' => 'datetime:Uv',
+        'date_updated' => 'datetime:Uv',
+        'due_date' => 'datetime:Uv',
+        'id' => 'string',
+        'orderindex' => 'float',
+        'start_date' => 'datetime:Uv',
+        'team_id' => 'integer',
         'time_estimate' => 'integer',
-        'time_spent'    => 'integer',
+        'time_spent' => 'integer',
     ];
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/task';
+    protected string $path = '/task';
 
     /**
-     * @return HasMany
-
+     * Has many Comments
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -93,12 +89,9 @@ class Task extends Model
     /**
      * Accessor for Assignees.
      *
-     * @param array $assignees
-     *
-     * @return Collection
      * @throws NoClientException
      */
-    public function getAssigneesAttribute(array $assignees): Collection
+    public function getAssigneesAttribute(?array $assignees): Collection
     {
         return $this->givenMany(Member::class, $assignees);
     }
@@ -106,12 +99,9 @@ class Task extends Model
     /**
      * Accessor for Checklists.
      *
-     * @param array $checklists
-     *
-     * @return Collection
      * @throws NoClientException
      */
-    public function getChecklistsAttribute(array $checklists): Collection
+    public function getChecklistsAttribute(?array $checklists): Collection
     {
         return $this->givenMany(Checklist::class, $checklists);
     }
@@ -119,12 +109,9 @@ class Task extends Model
     /**
      * Accessor for Creator.
      *
-     * @param array $creator
-     *
-     * @return Member
      * @throws NoClientException
      */
-    public function getCreatorAttribute($creator): Member
+    public function getCreatorAttribute(?array $creator): Member
     {
         return $this->givenOne(Member::class, $creator);
     }
@@ -132,12 +119,9 @@ class Task extends Model
     /**
      * Accessor for CustomFields.
      *
-     * @param array $custom_fields
-     *
-     * @return Collection
      * @throws NoClientException
      */
-    public function getCustomFieldsAttribute(array $custom_fields): Collection
+    public function getCustomFieldsAttribute(?array $custom_fields): Collection
     {
         return $this->givenMany(Field::class, $custom_fields);
     }
@@ -145,12 +129,9 @@ class Task extends Model
     /**
      * Accessor for Folder.
      *
-     * @param array $folder
-     *
-     * @return Folder
      * @throws NoClientException
      */
-    public function getFolderAttribute($folder): Folder
+    public function getFolderAttribute(?array $folder): Folder
     {
         return $this->givenOne(Folder::class, $folder);
     }
@@ -158,12 +139,10 @@ class Task extends Model
     /**
      * Accessor for Parent.
      *
-     * @param string $parent
-     *
-     * @return Task
+     * @throws NoClientException
      */
     // TODO: Figure out how to make this relationship work
-    /*public function getParentAttribute($parent): Task
+    /*public function getParentAttribute(?array $parent): Task
     {
         return $this->parentModel;
     }*/
@@ -171,12 +150,9 @@ class Task extends Model
     /**
      * Accessor for Priority.
      *
-     * @param array $priority
-     *
-     * @return Priority
      * @throws NoClientException
      */
-    public function getPriorityAttribute($priority): Priority
+    public function getPriorityAttribute(?array $priority): Priority
     {
         return $this->givenOne(Priority::class, $priority);
     }
@@ -184,12 +160,9 @@ class Task extends Model
     /**
      * Accessor for Project.
      *
-     * @param array $project
-     *
-     * @return Project
      * @throws NoClientException
      */
-    public function getProjectAttribute($project): Project
+    public function getProjectAttribute(?array $project): Project
     {
         // TODO: This is not documented. I think it is a hold over from v1?
         return $this->givenOne(Project::class, $project);
@@ -198,12 +171,9 @@ class Task extends Model
     /**
      * Accessor for Space.
      *
-     * @param array $space
-     *
-     * @return Space
      * @throws NoClientException
      */
-    public function getSpaceAttribute($space): Space
+    public function getSpaceAttribute(?array $space): Space
     {
         // TODO: Look into making this a relationship
         return $this->givenOne(Space::class, $space);
@@ -212,12 +182,9 @@ class Task extends Model
     /**
      * Accessor for Status.
      *
-     * @param array $status
-     *
-     * @return Status
      * @throws NoClientException
      */
-    public function getStatusAttribute($status): Status
+    public function getStatusAttribute(?array $status): Status
     {
         return $this->givenOne(Status::class, $status);
     }
@@ -225,18 +192,16 @@ class Task extends Model
     /**
      * Accessor for Tags.
      *
-     * @param array $tags
-     *
-     * @return Collection
      * @throws NoClientException
      */
-    public function getTagsAttribute(array $tags): Collection
+    public function getTagsAttribute(?array $tags): Collection
     {
         return $this->givenMany(Tag::class, $tags);
     }
 
     /**
-     * @return ChildOf
+     * Optional Child of TaskList
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -247,8 +212,8 @@ class Task extends Model
     }
 
     /**
-     * @return HasMany
-
+     * Has many Members
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -259,7 +224,10 @@ class Task extends Model
     }
 
     /**
+     * Optional Child of Team
+     *
      * @return ChildOf
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -270,8 +238,8 @@ class Task extends Model
     }
 
     /**
-     * @return HasMany
-
+     * Has many Times
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -282,7 +250,8 @@ class Task extends Model
     }
 
     /**
-     * @return BelongsTo
+     * Belongs to View
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

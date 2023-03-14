@@ -4,32 +4,28 @@ namespace Spinen\ClickUp\Concerns;
 
 use Spinen\ClickUp\Api\Client;
 use Spinen\ClickUp\Exceptions\NoClientException;
-use Spinen\ClickUp\Support\Model;
 
 trait HasClient
 {
     /**
      * Client instance
-     *
-     * @var Client
      */
-    protected $client;
+    protected Client $client;
 
     /**
      * Get the Client instance
      *
      * If there is no client assigned on the model, but it has a parent, then try to get the parent's client
      *
-     * @return Client
      * @throws NoClientException
      */
     public function getClient(): Client
     {
-        if (!$this->client && $this->parentModel) {
+        if (! isset($this->client) && $this->parentModel) {
             $this->client = $this->parentModel->getClient();
         }
 
-        if ($this->client) {
+        if (isset($this->client)) {
             return $this->client;
         }
 
@@ -38,10 +34,6 @@ trait HasClient
 
     /**
      * Set the client instance
-     *
-     * @param Client $client
-     *
-     * @return $this
      */
     public function setClient(?Client $client): self
     {

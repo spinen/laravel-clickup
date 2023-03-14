@@ -4,8 +4,6 @@ namespace Spinen\ClickUp;
 
 /**
  * Class IntervalTest
- *
- * @package Spinen\ClickUp
  */
 class IntervalTest extends ModelCase
 {

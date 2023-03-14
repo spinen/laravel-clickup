@@ -8,8 +8,6 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 
 /**
  * Class GoalTest
- *
- * @package Spinen\ClickUp
  */
 class GoalTest extends ModelCase
 {

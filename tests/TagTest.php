@@ -6,8 +6,6 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 
 /**
  * Class TagTest
- *
- * @package Spinen\ClickUp
  */
 class TagTest extends ModelCase
 {

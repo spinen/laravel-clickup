@@ -7,8 +7,6 @@ use Spinen\ClickUp\Support\Model;
 /**
  * Class TaskTemplate
  *
- * @package Spinen\ClickUp
- *
  * @property string $id
  * @property string $name
  */
@@ -25,15 +23,11 @@ class TaskTemplate extends Model
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/taskTemplate';
+    protected string $path = '/taskTemplate';
 
     /**
      * Some of the responses have the collections under a property
-     *
-     * @var string|null
      */
-    protected $responseCollectionKey = 'templates';
+    protected ?string $responseCollectionKey = 'templates';
 }

@@ -8,8 +8,6 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 
 /**
  * Class FolderTest
- *
- * @package Spinen\ClickUp
  */
 class FolderTest extends ModelCase
 {

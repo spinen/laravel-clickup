@@ -11,7 +11,9 @@ class User
     public $attributes = [
         'clickup_token' => 'encrypted',
     ];
+
     public $fillable = [];
+
     public $hidden = [];
 
     /**

@@ -14,8 +14,6 @@ use Spinen\ClickUp\TestCase;
 
 /**
  * Class FilterTest
- *
- * @package Spinen\ClickUp\Http\Middleware
  */
 class FilterTest extends TestCase
 {
@@ -54,9 +52,6 @@ class FilterTest extends TestCase
      */
     protected $user_mock;
 
-    /**
-     *
-     */
     protected function setUp(): void
     {
         $this->clickup_mock = Mockery::mock(ClickUp::class);
@@ -211,7 +206,7 @@ class FilterTest extends TestCase
     /**
      * Mock out the models setAttribute and getAttribute mutators with the given token
      *
-     * @param string|null $token
+     * @param  string|null  $token
      */
     protected function mockUserAttributeMutators($token = null): void
     {

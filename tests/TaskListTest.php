@@ -8,8 +8,6 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 
 /**
  * Class TaskListTest
- *
- * @package Spinen\ClickUp
  */
 class TaskListTest extends ModelCase
 {

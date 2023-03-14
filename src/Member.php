@@ -11,17 +11,15 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 /**
  * Class Member
  *
- * @package Spinen\ClickUp
- *
- * @property integer $id
- * @property integer $role
+ * @property int $id
+ * @property int $role
  * @property string $color
  * @property string $email
  * @property string $initials
  * @property string $profilePicture
  * @property string $username
- * @property Task $task
- * @property TaskList $list
+ * @property Task|null $task
+ * @property TaskList|null $list
  */
 class Member extends Model
 {
@@ -31,19 +29,18 @@ class Member extends Model
      * @var array
      */
     protected $casts = [
-        'id'   => 'integer',
+        'id' => 'integer',
         'role' => 'integer',
     ];
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/member';
+    protected string $path = '/member';
 
     /**
-     * @return ChildOf
+     * Optional Child of TaskList
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -54,7 +51,8 @@ class Member extends Model
     }
 
     /**
-     * @return ChildOf
+     * Optional Child of Task
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

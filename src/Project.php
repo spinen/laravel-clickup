@@ -7,12 +7,10 @@ use Spinen\ClickUp\Support\Model;
 /**
  * Class Project
  *
- * @package Spinen\ClickUp
- *
- * @property integer $id
+ * @property int $id
  * @property string $name
- * @property boolean $hidden
- * @property boolean $access
+ * @property bool $hidden
+ * @property bool $access
  */
 class Project extends Model
 {
@@ -22,15 +20,13 @@ class Project extends Model
      * @var array
      */
     protected $casts = [
-        'id'     => 'integer',
+        'id' => 'integer',
         'hidden' => 'boolean',
         'access' => 'boolean',
     ];
 
     /**
      * Is the model readonly?
-     *
-     * @var bool
      */
-    protected $readonlyModel = true;
+    protected bool $readonlyModel = true;
 }

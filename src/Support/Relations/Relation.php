@@ -10,8 +10,6 @@ use Spinen\ClickUp\Support\Model;
 
 /**
  * Class Relation
- *
- * @package Spinen\ClickUp\Support\Relations
  */
 abstract class Relation
 {
@@ -20,51 +18,27 @@ abstract class Relation
     }
 
     /**
-     * The Eloquent builder builder instance.
-     *
-     * @var Builder
-     */
-    protected $builder;
-
-    /**
-     * The parent model instance.
-     *
-     * @var Model
-     */
-    protected $parent;
-
-    /**
      * The related model instance.
-     *
-     * @var Model
      */
-    protected $related;
+    protected Model $related;
 
     /**
      * Create a new relation instance.
      *
-     * @param Builder $builder
-     * @param Model $parent
      *
      * @return void
+     *
      * @throws InvalidRelationshipException
      */
-    public function __construct(Builder $builder, Model $parent)
+    public function __construct(protected Builder $builder, protected Model $parent)
     {
-        $this->builder = $builder;
-        $this->parent = $parent;
         $this->related = $builder->getModel();
     }
 
     /**
      * Handle dynamic method calls to the relationship.
-     *
-     * @param string $method
-     * @param array $parameters
-     *
-     * @return mixed
      */
-    public function __call($method, $parameters)
+    public function __call(string $method, array $parameters)
     {
         if (static::hasMacro($method)) {
             return $this->macroCall($method, $parameters);
@@ -81,8 +55,6 @@ abstract class Relation
 
     /**
      * Get the Builder instance
-     *
-     * @return Builder
      */
     public function getBuilder(): Builder
     {
@@ -91,8 +63,6 @@ abstract class Relation
 
     /**
      * Get the parent Model instance
-     *
-     * @return Model
      */
     public function getParent(): Model
     {
@@ -101,8 +71,6 @@ abstract class Relation
 
     /**
      * Get the related Model instance
-     *
-     * @return Model
      */
     public function getRelated(): Model
     {
@@ -111,8 +79,6 @@ abstract class Relation
 
     /**
      * Get the results of the relationship.
-     *
-     * @return mixed
      */
     abstract public function getResults();
 }

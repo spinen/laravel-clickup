@@ -6,8 +6,6 @@ use Spinen\ClickUp\Support\Collection;
 
 /**
  * Class ItemTest
- *
- * @package Spinen\ClickUp
  */
 class ItemTest extends ModelCase
 {

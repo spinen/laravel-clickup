@@ -7,8 +7,6 @@ use Spinen\ClickUp\Support\Relations\ChildOf;
 
 /**
  * Class BuilderTest
- *
- * @package Spinen\ClickUp
  */
 class ChecklistTest extends ModelCase
 {

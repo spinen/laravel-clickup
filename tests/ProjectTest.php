@@ -4,8 +4,6 @@ namespace Spinen\ClickUp;
 
 /**
  * Class ProjectTest
- *
- * @package Spinen\ClickUp
  */
 class ProjectTest extends ModelCase
 {

@@ -7,8 +7,6 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 
 /**
  * Class TeamTest
- *
- * @package Spinen\ClickUp
  */
 class TeamTest extends ModelCase
 {

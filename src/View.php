@@ -13,8 +13,6 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 /**
  * Class View
  *
- * @package Spinen\ClickUp
- *
  * @property array $columns
  * @property array $divide
  * @property array $filters
@@ -23,17 +21,23 @@ use Spinen\ClickUp\Support\Relations\HasMany;
  * @property array $settings
  * @property array $sorting
  * @property array $team_sidebar
- * @property boolean $protected
+ * @property bool $protected
  * @property Carbon $date_created
  * @property Carbon $date_protected
+ * @property Collection $comments
+ * @property Collection $tasks
  * @property float $orderindex
- * @property integer $creator
+ * @property Folder|null $folder
+ * @property int $creator
  * @property Member $protected_by
+ * @property Space|null $space
  * @property string $id
  * @property string $name
  * @property string $protected_note
  * @property string $type
  * @property string $visibility
+ * @property TaskList|null $list
+ * @property Team|null $team
  */
 class View extends Model
 {
@@ -43,23 +47,21 @@ class View extends Model
      * @var array
      */
     protected $casts = [
-        'date_created'   => 'datetime:Uv',
+        'date_created' => 'datetime:Uv',
         'date_protected' => 'integer',
-        'id'             => 'string',
-        'orderindex'     => 'float',
-        'protected'      => 'boolean',
+        'id' => 'string',
+        'orderindex' => 'float',
+        'protected' => 'boolean',
     ];
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/view';
+    protected string $path = '/view';
 
     /**
-     * @return HasMany
-
+     * Has many Comments
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -76,7 +78,8 @@ class View extends Model
     }
 
     /**
-     * @return ChildOf
+     * Optional Child of Folder
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -89,18 +92,16 @@ class View extends Model
     /**
      * Accessor for ProtectedBy.
      *
-     * @param array $protected_by
-     *
-     * @return Member
      * @throws NoClientException
      */
-    public function getProtectedByAttribute($protected_by): Member
+    public function getProtectedByAttribute(?array $protected_by): Member
     {
         return $this->givenOne(Member::class, $protected_by);
     }
 
     /**
-     * @return ChildOf
+     * Optional Child of TaskList
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -111,7 +112,8 @@ class View extends Model
     }
 
     /**
-     * @return ChildOf
+     * Optional Child of Space
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -122,8 +124,8 @@ class View extends Model
     }
 
     /**
-     * @return HasMany
-
+     * HasMany Tasks
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -140,7 +142,8 @@ class View extends Model
     }
 
     /**
-     * @return ChildOf
+     * Optional Child of Team
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

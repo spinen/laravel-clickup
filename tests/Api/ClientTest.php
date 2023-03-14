@@ -15,8 +15,6 @@ use TypeError;
 
 /**
  * Class ClientTest
- *
- * @package Spinen\ClickUp\Api
  */
 class ClientTest extends TestCase
 {
@@ -52,10 +50,9 @@ class ClientTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->configs = require(__DIR__ . '/../../config/clickup.php');
+        $this->configs = require __DIR__.'/../../config/clickup.php';
 
         $this->guzzle_mock = Mockery::mock(Guzzle::class);
-
 
         $this->stream_interface_mock = Mockery::mock(StreamInterface::class);
         $this->stream_interface_mock->shouldReceive('getContents')
@@ -171,7 +168,7 @@ class ClientTest extends TestCase
     {
         $this->client->setConfigs(
             [
-                'url' => "",
+                'url' => '',
             ]
         );
 
@@ -242,6 +239,7 @@ class ClientTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider requestProvider
      */
     public function it_makes_expected_request_to_api($function, $method, $data, $parameter = null)
@@ -253,13 +251,13 @@ class ClientTest extends TestCase
                           ->withArgs(
                               [
                                   $method,
-                                  $this->configs['url'] . '/resource',
+                                  $this->configs['url'].'/resource',
                                   [
                                       'headers' => [
                                           'Authorization' => $token,
-                                          'Content-Type'  => 'application/json',
+                                          'Content-Type' => 'application/json',
                                       ],
-                                      'body'    => empty($options) ? null : json_encode($options),
+                                      'body' => empty($options) ? null : json_encode($options),
                                   ],
                               ]
                           )
@@ -282,29 +280,29 @@ class ClientTest extends TestCase
         return [
             'raw request' => [
                 'function' => 'request',
-                'method'   => 'GET',
-                'data'     => [],
+                'method' => 'GET',
+                'data' => [],
             ],
-            'delete'      => [
+            'delete' => [
                 'function' => 'delete',
-                'method'   => 'DELETE',
-                'data'     => [],
+                'method' => 'DELETE',
+                'data' => [],
             ],
-            'get'         => [
+            'get' => [
                 'function' => 'get',
-                'method'   => 'GET',
-                'data'     => null,
+                'method' => 'GET',
+                'data' => null,
             ],
-            'post'        => [
-                'function'  => 'post',
-                'method'    => 'POST',
-                'data'      => [],
+            'post' => [
+                'function' => 'post',
+                'method' => 'POST',
+                'data' => [],
                 'parameter' => [],
             ],
-            'put'         => [
-                'function'  => 'put',
-                'method'    => 'PUT',
-                'data'      => [],
+            'put' => [
+                'function' => 'put',
+                'method' => 'PUT',
+                'data' => [],
                 'parameter' => [],
             ],
         ];
@@ -328,6 +326,7 @@ class ClientTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider responseProvider
      */
     public function it_returns_expected_responses($json, $expected)
@@ -357,26 +356,26 @@ class ClientTest extends TestCase
     public function responseProvider()
     {
         return [
-            'null'         => [
-                'json'     => 'null',
+            'null' => [
+                'json' => 'null',
                 'expected' => null,
             ],
             'empty_object' => [
-                'json'     => '{}',
+                'json' => '{}',
                 'expected' => [],
             ],
-            'empty_array'  => [
-                'json'     => '[]',
+            'empty_array' => [
+                'json' => '[]',
                 'expected' => [],
             ],
-            'object'       => [
-                'json'     => '{"some": "key"}',
+            'object' => [
+                'json' => '{"some": "key"}',
                 'expected' => [
                     'some' => 'key',
                 ],
             ],
-            'array'        => [
-                'json'     => '[{"some": 1}, {"some": 2}]',
+            'array' => [
+                'json' => '[{"some": 1}, {"some": 2}]',
                 'expected' => [
                     [
                         'some' => 1,
@@ -438,7 +437,7 @@ class ClientTest extends TestCase
                           ->withArgs(
                               [
                                   'POST',
-                                  $this->configs['url'] .
+                                  $this->configs['url'].
                                   '/oauth/token?client_id=client_id&client_secret=client_secret&code=oauth_code',
                                   [
                                       'headers' => [

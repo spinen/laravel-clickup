@@ -26,6 +26,11 @@ class ClickUpControllerTest extends TestCase
     /**
      * @var Mock
      */
+    protected $redirect_mock;
+
+    /**
+     * @var Mock
+     */
     protected $redirector_mock;
 
     /**
@@ -42,7 +47,13 @@ class ClickUpControllerTest extends TestCase
     {
         $this->clickup_mock = Mockery::mock(ClickUp::class);
 
+        $this->redirect_mock = Mockery::mock(RedirectResponse::class);
+
         $this->redirector_mock = Mockery::mock(Redirector::class);
+
+        $this->redirector_mock->shouldReceive('intended')
+                              ->withNoArgs()
+                              ->andReturn($this->redirect_mock);
 
         $this->request_mock = Mockery::mock(Request::class);
 
@@ -84,8 +95,6 @@ class ClickUpControllerTest extends TestCase
 
         $this->user_mock->shouldIgnoreMissing();
 
-        $this->redirector_mock->shouldIgnoreMissing();
-
         $this->controller->processCode(
             $this->clickup_mock,
             $this->redirector_mock,
@@ -121,8 +130,6 @@ class ClickUpControllerTest extends TestCase
                         ->once()
                         ->andReturn('oauth_token');
 
-        $this->redirector_mock->shouldIgnoreMissing();
-
         $this->controller->processCode(
             $this->clickup_mock,
             $this->redirector_mock,
@@ -144,13 +151,6 @@ class ClickUpControllerTest extends TestCase
 
         $this->user_mock->shouldIgnoreMissing();
 
-        $redirect_mock = Mockery::mock(RedirectResponse::class);
-
-        $this->redirector_mock->shouldReceive('intended')
-                              ->once()
-                              ->withNoArgs()
-                              ->andReturn($redirect_mock);
-
         $response = $this->controller->processCode(
             $this->clickup_mock,
             $this->redirector_mock,
@@ -158,6 +158,6 @@ class ClickUpControllerTest extends TestCase
             $this->user_mock
         );
 
-        $this->assertEquals($redirect_mock, $response);
+        $this->assertEquals($this->redirect_mock, $response);
     }
 }

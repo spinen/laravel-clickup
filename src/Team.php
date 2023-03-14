@@ -12,8 +12,6 @@ use Spinen\ClickUp\Support\Relations\HasMany;
 /**
  * Class Team
  *
- * @package Spinen\ClickUp
- *
  * @property Collection $goals
  * @property Collection $members
  * @property Collection $shares
@@ -22,11 +20,10 @@ use Spinen\ClickUp\Support\Relations\HasMany;
  * @property Collection $taskTemplates
  * @property Collection $views
  * @property Collection $webhooks
- * @property integer $id
+ * @property int $id
  * @property string $avatar
  * @property string $color
  * @property string $name
- *
  */
 class Team extends Model
 {
@@ -41,26 +38,12 @@ class Team extends Model
 
     /**
      * Path to API endpoint.
-     *
-     * @var string
      */
-    protected $path = '/team';
+    protected string $path = '/team';
 
     /**
-     * Accessor for Members.
+     * Has many Goals
      *
-     * @param array $members
-     *
-     * @return Collection
-     * @throws NoClientException
-     */
-    public function getMembersAttribute(array $members): Collection
-    {
-        return $this->givenMany(Member::class, $members, true);
-    }
-
-    /**
-     * @return HasMany
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -71,7 +54,18 @@ class Team extends Model
     }
 
     /**
-     * @return HasMany
+     * Accessor for Members.
+     *
+     * @throws NoClientException
+     */
+    public function getMembersAttribute(?array $members): Collection
+    {
+        return $this->givenMany(Member::class, $members, true);
+    }
+
+    /**
+     * Has many Shares
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -82,7 +76,8 @@ class Team extends Model
     }
 
     /**
-     * @return HasMany
+     * Has many Spaces
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -93,7 +88,8 @@ class Team extends Model
     }
 
     /**
-     * @return HasMany
+     * Has many Tasks
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -104,7 +100,8 @@ class Team extends Model
     }
 
     /**
-     * @return HasMany
+     * Has many TaskTemplates
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -115,7 +112,8 @@ class Team extends Model
     }
 
     /**
-     * @return HasMany
+     * Has many Views
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException
@@ -126,7 +124,8 @@ class Team extends Model
     }
 
     /**
-     * @return HasMany
+     * Has many Webhooks
+     *
      * @throws InvalidRelationshipException
      * @throws ModelNotFoundException
      * @throws NoClientException

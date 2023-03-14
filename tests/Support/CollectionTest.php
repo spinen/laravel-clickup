@@ -6,8 +6,6 @@ use Spinen\ClickUp\TestCase;
 
 /**
  * Class CollectionTestTest
- *
- * @package Spinen\ClickUp\Support
  */
 class CollectionTest extends TestCase
 {

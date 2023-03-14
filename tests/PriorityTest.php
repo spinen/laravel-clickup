@@ -4,8 +4,6 @@ namespace Spinen\ClickUp;
 
 /**
  * Class PriorityTest
- *
- * @package Spinen\ClickUp
  */
 class PriorityTest extends ModelCase
 {
