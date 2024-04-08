@@ -509,6 +509,18 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     }
 
     /**
+     * Determine if accessing missing attributes is disabled.
+     *
+     *
+     * @return bool
+     */
+    public static function preventsAccessingMissingAttributes()
+    {
+        // NOTE: Needed for HasAttributes, just return false
+        return false;
+    }
+
+    /**
      * Determine if the given attribute exists.
      */
     public function offsetExists($offset): bool
