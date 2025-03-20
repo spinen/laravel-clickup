@@ -21,9 +21,9 @@ use Spinen\ClickUp\View;
 class BuilderTest extends TestCase
 {
     /**
-     * @var Builder
+     * @var ClickUpBuilder
      */
-    protected $builder;
+    protected $clickUpBuilder;
 
     /**
      * @var Mock
@@ -50,8 +50,8 @@ class BuilderTest extends TestCase
     {
         $this->client_mock = Mockery::mock(Client::class);
 
-        $this->builder = new Builder();
-        $this->builder->setClient($this->client_mock);
+        $this->clickUpBuilder = new ClickUpBuilder();
+        $this->clickUpBuilder->setClient($this->client_mock);
     }
 
     /**

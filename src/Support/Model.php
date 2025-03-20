@@ -223,10 +223,10 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     {
         $foreignKey = $foreignKey ?? $this->assumeForeignKey($related);
 
-        $builder = (new Builder())->setClass($related)
+        $clickUpBuilder = (new ClickUpBuilder())->setClass($related)
                                   ->setClient($this->getClient());
 
-        return new BelongsTo($builder, $this, $foreignKey);
+        return new BelongsTo($clickUpBuilder, $this, $foreignKey);
     }
 
     /**
@@ -243,11 +243,11 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     {
         $foreignKey = $foreignKey ?? $this->assumeForeignKey($related);
 
-        $builder = (new Builder())->setClass($related)
+        $builder = (new ClickUpBuilder())->setClass($related)
                                   ->setClient($this->getClient())
                                   ->setParent($this);
 
-        return new ChildOf($builder, $this, $foreignKey);
+        return new ChildOf($clickUpBuilder, $this, $foreignKey);
     }
 
     /**
@@ -452,11 +452,11 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      */
     public function hasMany($related): HasMany
     {
-        $builder = (new Builder())->setClass($related)
+        $clickUpBuilder = (new ClickUpBuilder())->setClass($related)
                                   ->setClient($this->getClient())
                                   ->setParent($this);
 
-        return new HasMany($builder, $this);
+        return new HasMany($clickUpBuilder, $this);
     }
 
     /**

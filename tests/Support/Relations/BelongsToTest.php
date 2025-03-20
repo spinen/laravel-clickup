@@ -3,7 +3,7 @@
 namespace Spinen\ClickUp\Support\Relations;
 
 use Mockery;
-use Spinen\ClickUp\Support\Builder;
+use Spinen\ClickUp\Support\ClickUpBuilder;
 use Spinen\ClickUp\Support\Collection;
 use Spinen\ClickUp\Support\Stubs\Model;
 
@@ -96,7 +96,7 @@ class BelongsToTest extends RelationCase
      */
     public function it_returns_null_if_foreign_key_is_null()
     {
-        $builder_mock = Mockery::mock(Builder::class);
+        $builder_mock = Mockery::mock(ClickUpBuilder::class);
         $builder_mock->shouldReceive('getModel')
                      ->andReturn($this->parent_mock);
         $builder_mock->shouldReceive('whereId')

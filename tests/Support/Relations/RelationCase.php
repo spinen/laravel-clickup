@@ -4,7 +4,7 @@ namespace Spinen\ClickUp\Support\Relations;
 
 use Mockery;
 use Mockery\Mock;
-use Spinen\ClickUp\Support\Builder;
+use Spinen\ClickUp\Support\ClickUpBuilder;
 use Spinen\ClickUp\Support\Model;
 use Spinen\ClickUp\TestCase;
 
@@ -29,7 +29,7 @@ class RelationCase extends TestCase
     {
         $this->parent_mock = Mockery::mock(Model::class);
 
-        $this->builder_mock = Mockery::mock(Builder::class);
+        $this->builder_mock = Mockery::mock(ClickUpBuilder::class);
         $this->builder_mock->shouldReceive('getModel')
                            ->andReturn($this->parent_mock);
 

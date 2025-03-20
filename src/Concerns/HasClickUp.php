@@ -7,7 +7,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Crypt;
 use Spinen\ClickUp\Api\Client as ClickUp;
 use Spinen\ClickUp\Exceptions\NoClientException;
-use Spinen\ClickUp\Support\Builder;
+use Spinen\ClickUp\Support\ClickUpBuilder;
 
 /**
  * Trait HasClickUp
@@ -20,18 +20,18 @@ trait HasClickUp
     /**
      * ClickUp Builder instance
      */
-    protected ?Builder $builder = null;
+    protected ?ClickUpBuilder $clickUpBuilder = null;
 
     /**
      * Return cached version of the ClickUp Builder for the user
      *
      * @throws BindingResolutionException
      */
-    public function clickup(): Builder
+    public function clickup(): ClickUpBuilder
     {
-        if (is_null($this->builder)) {
-            $this->builder = Container::getInstance()
-                ->make(Builder::class)
+        if (is_null($this->clickUpBuilder)) {
+            $this->clickUpBuilder = Container::getInstance()
+                ->make(ClickUpBuilder::class)
                 ->setClient(
                     Container::getInstance()
                     ->make(ClickUp::class)
@@ -39,7 +39,7 @@ trait HasClickUp
                 );
         }
 
-        return $this->builder;
+        return $this->clickUpBuilder;
     }
 
     /**
@@ -62,7 +62,7 @@ trait HasClickUp
     public function getClickupTokenAttribute(): ?string
     {
         if (! is_null($this->attributes['clickup_token'])) {
-            return Crypt::decryptString($this->attributes['clickup_token']);
+            return unserialize(Crypt::decryptString($this->attributes['clickup_token']));
         }
 
         return null;
@@ -86,8 +86,8 @@ trait HasClickUp
     public function setClickupTokenAttribute(?string $clickup_token): void
     {
         // If setting the password & already have a client, then empty the client to use new password in client
-        if (! is_null($this->builder)) {
-            $this->builder = null;
+        if (! is_null($this->clickUpBuilder)) {
+            $this->clickUpBuilder = null;
         }
 
         $this->attributes['clickup_token'] = is_null($clickup_token)

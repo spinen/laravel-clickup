@@ -6,7 +6,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Spinen\ClickUp\Exceptions\InvalidRelationshipException;
 use Spinen\ClickUp\Exceptions\NoClientException;
 use Spinen\ClickUp\Exceptions\TokenException;
-use Spinen\ClickUp\Support\Builder;
+use Spinen\ClickUp\Support\ClickUpBuilder;
 use Spinen\ClickUp\Support\Model;
 
 /**
@@ -21,14 +21,14 @@ class BelongsTo extends Relation
      *
      * @throws InvalidRelationshipException
      */
-    public function __construct(protected Builder $builder, protected Model $child, protected $foreignKey)
+    public function __construct(protected ClickUpBuilder $clickUpBuilder, protected Model $child, protected $foreignKey)
     {
         // In the underlying base relationship class, the "child" variable is
         // referred to as the "parentModel" since most relationships are not
         // inversed. But, since this one is we will create a "child" variable
         // for much better readability.
 
-        parent::__construct($builder->whereId($this->getForeignKey()), $this->getChild());
+        parent::__construct($clickUpBuilder->whereId($this->getForeignKey()), $this->getChild());
     }
 
     /**

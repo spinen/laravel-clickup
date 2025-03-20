@@ -17,7 +17,7 @@ use Spinen\ClickUp\Team;
 use Spinen\ClickUp\User;
 
 /**
- * Class Builder
+ * Class ClickUpBuilder
  *
  * @property Collection $spaces
  * @property Collection $tasks
@@ -30,7 +30,7 @@ use Spinen\ClickUp\User;
  * @method teams
  * @method workspaces
  */
-class Builder
+class ClickUpBuilder
 {
     use HasClient;
 

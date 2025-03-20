@@ -9,7 +9,7 @@ use Mockery\Mock;
 use ReflectionClass;
 use Spinen\ClickUp\Api\Client as ClickUp;
 use Spinen\ClickUp\Concerns\Stubs\User;
-use Spinen\ClickUp\Support\Builder;
+use Spinen\ClickUp\Support\ClickUpBuilder;
 use Spinen\ClickUp\TestCase;
 
 class HasClickUpTest extends TestCase
@@ -47,7 +47,7 @@ class HasClickUpTest extends TestCase
             )
             ->andReturnSelf();
 
-        $this->builder_mock = Mockery::mock(Builder::class);
+        $this->builder_mock = Mockery::mock(ClickUpBuilder::class);
         $this->builder_mock->shouldReceive('getClient')
             ->withNoArgs()
             ->andReturn($this->client_mock);
@@ -60,7 +60,7 @@ class HasClickUpTest extends TestCase
             ->andReturnSelf();
 
         Container::getInstance()
-            ->instance(Builder::class, $this->builder_mock);
+            ->instance(ClickUpBuilder::class, $this->builder_mock);
 
         Container::getInstance()
             ->instance(ClickUp::class, $this->client_mock);

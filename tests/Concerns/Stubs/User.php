@@ -23,6 +23,6 @@ class User
 
     public function getBuilder()
     {
-        return $this->builder;
+        return $this->clickUpBuilder;
     }
 }

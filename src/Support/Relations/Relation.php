@@ -5,7 +5,7 @@ namespace Spinen\ClickUp\Support\Relations;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Illuminate\Support\Traits\Macroable;
 use Spinen\ClickUp\Exceptions\InvalidRelationshipException;
-use Spinen\ClickUp\Support\Builder;
+use Spinen\ClickUp\Support\ClickUpBuilder;
 use Spinen\ClickUp\Support\Model;
 
 /**
@@ -30,9 +30,9 @@ abstract class Relation
      *
      * @throws InvalidRelationshipException
      */
-    public function __construct(protected Builder $builder, protected Model $parent)
+    public function __construct(protected ClickUpBuilder $clickUpBuilder, protected Model $parent)
     {
-        $this->related = $builder->getModel();
+        $this->related = $clickUpBuilder->getModel();
     }
 
     /**
@@ -56,9 +56,9 @@ abstract class Relation
     /**
      * Get the Builder instance
      */
-    public function getBuilder(): Builder
+    public function getBuilder(): ClickUpBuilder
     {
-        return $this->builder;
+        return $this->clickUpBuilder;
     }
 
     /**

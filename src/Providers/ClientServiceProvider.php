@@ -8,7 +8,7 @@ use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use Spinen\ClickUp\Api\Client as ClickUp;
-use Spinen\ClickUp\Support\Builder;
+use Spinen\ClickUp\Support\ClickUpBuilder;
 
 /**
  * Class ClientServiceProvider
@@ -47,7 +47,7 @@ class ClientServiceProvider extends LaravelServiceProvider implements Deferrable
     public function provides()
     {
         return [
-            Builder::class,
+            ClickUpBuilder::class,
             ClickUp::class,
         ];
     }
@@ -60,8 +60,8 @@ class ClientServiceProvider extends LaravelServiceProvider implements Deferrable
     protected function registerClient(): void
     {
         $this->app->bind(
-            Builder::class,
-            fn (Application $app): Builder => new Builder($app->make(ClickUp::class))
+            ClickUpBuilder::class,
+            fn (Application $app): ClickUpBuilder => new ClickUpBuilder($app->make(ClickUp::class))
         );
 
         $this->app->bind(
