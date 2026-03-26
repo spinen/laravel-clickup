@@ -19,17 +19,19 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           # Fetch 10 commits or Scrutinizer will throw ("Failed to retrieve commit parents. If you use a shallow git checkout, please checkout at least a depth of one."), see: RepositoryIntrospector at scrutinizer-ci/ocular GitHub repository
           # 10 commits is an arbitrary value that is more than 1 commit
           fetch-depth: 10
 
       - name: Cache dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: ~/.composer/cache
           key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+          restore-keys: |
+            dependencies-php-${{ matrix.php }}-composer-
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
