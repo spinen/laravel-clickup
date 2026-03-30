@@ -102,6 +102,15 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     protected bool $timestampsInMilliseconds = true;
 
     /**
+     * Indicates if the model was inserted during the object's lifecycle.
+     * 
+     * This is here for Laravel 9+ compatibility, even though we never use this property.
+     *
+     * @var bool
+     */
+    public $wasRecentlyCreated = false;
+
+    /**
      * The name of the "created at" column.
      *
      * @var string
